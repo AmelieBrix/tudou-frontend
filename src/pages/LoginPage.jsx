@@ -26,7 +26,8 @@ function LoginPage(props) {
     
     // Prepare request body with email and password
     const requestBody = { email, password };
-
+    console.log("THIS IS THE import.meta.env.whateverrrrr");
+    console.log(import.meta.env.REACT_APP_API_URL);
     console.log('this is the api url',API_URL);
  
     // Send POST request to login API endpoint
