@@ -25,7 +25,7 @@ function SignupPage(props) {
 
     const handleSignupSubmit = (e) => {
         e.preventDefault();
-
+        console.log("I am the submit button")
         // Validate that all fields are filled in
         if (!firstName || !lastName || !email || !password || !username) {
             setErrorMessage("All fields are required.");
@@ -45,6 +45,7 @@ function SignupPage(props) {
         axios.post(`${API_URL}/auth/signup`, requestBody)
             .then(() => {
                 // Redirect to the login page on success
+                console.log("I AM HERE IN THE AXIOS POST!");
                 navigate('/login');
             })
             .catch((error) => {
