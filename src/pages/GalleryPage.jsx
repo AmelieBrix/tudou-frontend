@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -42,7 +42,7 @@ const GalleryPage = () => {
               </p>
 
               {/* Link to the detailed post page */}
-              <Link to={`posts/gallery/${post._id}`}>Read More</Link>
+              <Link to={`/gallery/${post._id}`}>Read More</Link>
             </li>
           ))}
         </ul>

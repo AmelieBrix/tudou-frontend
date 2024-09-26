@@ -5,7 +5,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";  // We will use `useNavigate` to redirect after login.
 import { AuthContext } from "../context/auth.context";
  
-const API_URL = "http://localhost:5005";  // Replace with your actual backend URL.
+const API_URL = import.meta.env.REACT_APP_API_URL || "http://localhost:5005";  
  
 function LoginPage(props) {
   const [email, setEmail] = useState("");  // For email input
