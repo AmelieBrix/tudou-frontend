@@ -26,6 +26,8 @@ function LoginPage(props) {
     
     // Prepare request body with email and password
     const requestBody = { email, password };
+
+    console.log('this is the api url',API_URL);
  
     // Send POST request to login API endpoint
     axios.post(`${API_URL}/auth/login`, requestBody)
