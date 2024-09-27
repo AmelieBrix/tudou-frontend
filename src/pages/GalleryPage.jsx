@@ -2,14 +2,15 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";  
+
 const GalleryPage = () => {
   const [posts, setPosts] = useState([]);  
   const [loading, setLoading] = useState(true);  
   const [error, setError] = useState(null); 
 
-  
   useEffect(() => {
-    axios.get('http://localhost:5005/posts?category=gallery')  
+    axios.get(`${API_URL}/posts?category=gallery`)  
       .then(response => {
         setPosts(response.data); 
         setLoading(false);  

@@ -2,6 +2,8 @@ import { useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/auth.context';  // Import AuthContext to access the token and user state
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
+
 const CreatePost = ({ category }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -17,7 +19,7 @@ const CreatePost = ({ category }) => {
     // Get the stored token from AuthContext
     const token = getToken();
 
-    axios.post('http://localhost:5005/posts/createpost', {
+    axios.post(`${API_URL}/posts/createpost`, {
       title,
       content,
       category,  // Automatically pass the category from the prop

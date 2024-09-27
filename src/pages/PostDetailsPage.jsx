@@ -3,15 +3,16 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import PostDetails from '../components/PostDetail';
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";  
+
 const PostDetailPage = () => {
   const { category, postId } = useParams();  
   const [post, setPost] = useState(null);    
   const [comment, setComment] = useState(''); 
   const [error, setError] = useState(null);
 
-
   useEffect(() => {
-    axios.get(`http://localhost:5005/posts/${postId}`)
+    axios.get(`${API_URL}/posts/${postId}`)
       .then(response => {
         console.log(response.data)
         setPost(response.data);   

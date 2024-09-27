@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005"; 
+
 const PostList = ({ category }) => {
   const [posts, setPosts] = useState([]); 
   const [error, setError] = useState(null); 
@@ -8,7 +10,7 @@ const PostList = ({ category }) => {
   
   useEffect(() => {
 
-    axios.get(`http://localhost:5005/posts?category=${category}`, {
+    axios.get(`${API_URL}/posts?category=${category}`, {
       headers: {
         Authorization: `Bearer ${token}`, 
       }
