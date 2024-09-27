@@ -16,8 +16,7 @@ const RecommendationPage = () => {
         setLoading(false);  
       })
       .catch(err => {
-       // setError('Failed to fetch posts');
-        setError(err);
+        setError('Failed to fetch posts');
         setLoading(false);  
       });
   }, []);
