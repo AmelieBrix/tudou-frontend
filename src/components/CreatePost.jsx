@@ -70,13 +70,13 @@ const CreatePost = ({ category }) => {
             onChange={(e) => setImageUrl(e.target.value)}
           />
         </div>
-        {/* Optionally show the category as read-only */}
+        {/* Opossible to have the catgeory be just read only, ... */}
         <div>
           <label>Category:</label>
           <input 
             type="text" 
             value={category} 
-            readOnly  // Make this read-only so the user can't change it
+            readOnly  
           />
         </div>
         <button type="submit">Create Post</button>

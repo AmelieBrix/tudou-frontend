@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://tudou-backend.onrender.com';  
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5005';  
 
 function SignupPage(props) {
 
@@ -26,13 +26,11 @@ function SignupPage(props) {
     const handleSignupSubmit = (e) => {
         e.preventDefault();
         console.log("I am the submit button")
-        // Validate that all fields are filled in
         if (!firstName || !lastName || !email || !password || !username) {
             setErrorMessage("All fields are required.");
-            return; // Stop the function if fields are missing
+            return; 
         }
 
-        // Create an object representing the request body
         const requestBody = {
             first_Name: firstName,   // Correct field name
             last_Name: lastName,
@@ -41,7 +39,6 @@ function SignupPage(props) {
             username
         };
 
-        // Make an axios request to the API
         axios.post(`${API_URL}/auth/signup`, requestBody)
             .then(() => {
                 // Redirect to the login page on success
@@ -59,7 +56,6 @@ function SignupPage(props) {
         <div className="SignupPage">
             <h1>Sign Up</h1>
 
-            {/* Single form to handle all inputs */}
             <form onSubmit={handleSignupSubmit}>
                 <label>First Name:</label>
                 <input

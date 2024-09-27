@@ -4,17 +4,17 @@ import axios from 'axios';
 import PostDetails from '../components/PostDetail';
 
 const PostDetailPage = () => {
-  const { category, postId } = useParams();  // Extract category and postId from the URL
-  const [post, setPost] = useState(null);    // State to store post details
-  const [comment, setComment] = useState('');  // State to store new comment
+  const { category, postId } = useParams();  
+  const [post, setPost] = useState(null);    
+  const [comment, setComment] = useState(''); 
   const [error, setError] = useState(null);
 
-  // Fetch post details on component mount
+
   useEffect(() => {
     axios.get(`http://localhost:5005/posts/${postId}`)
       .then(response => {
         console.log(response.data)
-        setPost(response.data);   // Store post details in state
+        setPost(response.data);   
       }) 
       .catch(err => {
         setError('Error fetching post details');
