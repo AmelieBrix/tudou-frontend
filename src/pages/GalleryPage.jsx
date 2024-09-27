@@ -12,6 +12,7 @@ const GalleryPage = () => {
   useEffect(() => {
     axios.get(`${API_URL}/posts?category=gallery`)  
       .then(response => {
+        console.log('this is the response data',response.data)
         setPosts(response.data); 
         setLoading(false);  
       })
