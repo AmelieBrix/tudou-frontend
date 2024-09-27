@@ -10,7 +10,7 @@ const GalleryPage = () => {
   const [error, setError] = useState(null); 
 
   useEffect(() => {
-    axios.get(`${API_URL}/posts?category=gallery`)  
+    axios.get(`${API_URL}/posts/?category=gallery`)  
       .then(response => {
         setPosts(response.data); 
         setLoading(false);  
