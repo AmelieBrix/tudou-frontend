@@ -13,6 +13,8 @@ import RecommendationPage from "./pages/Recommendations";
 import SearchAndFindPage from "./pages/SearchFind";
 import CreatePostPage from "./pages/CreatePost";
 import PostDetailPage from "./pages/PostDetailsPage";
+import ProfilePage from "./pages/ProfilePage";
+import UserPostsPage from "./pages/UserPostsPage";
  
 function App() {
   return (
@@ -27,7 +29,9 @@ function App() {
         <Route path="/recommendations" element={ <IsPrivate><RecommendationPage/></IsPrivate> } />
         <Route path="/createpost/:category" element={ <IsPrivate><CreatePostPage/></IsPrivate> } />
         <Route path="/:category/:postId" element={<PostDetailPage />} />
-      </Routes>
+        <Route path="/profile/:username" element={<ProfilePage />} />
+        <Route path="/posts/:authorId" element={<UserPostsPage />} />
+        </Routes>
       
     </div>
   );

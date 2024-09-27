@@ -66,7 +66,8 @@ function AuthProviderWrapper(props) {
             isLoggedIn,
             isLoading,
             user,
-            storeToken,  // Make storeToken available to all components
+            storeToken, 
+            getToken, // Make storeToken available to all components
             authenticateUser,
             logOutUser   // Make logOutUser available to components
           }}

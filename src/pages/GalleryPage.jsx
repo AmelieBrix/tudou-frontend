@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+/*import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -25,7 +25,10 @@ const GalleryPage = () => {
 
 
   if (loading) return <p>Loading posts...</p>;
-  if (error) return <p>{error}</p>;
+  if (error) return ( <div>{
+    <Link to="/createpost/gallery">
+    <button>Create New Post</button>
+  </Link>}</div>)
 
   return (
     <div>
@@ -58,5 +61,25 @@ const GalleryPage = () => {
     </div>
   );
 };
+*/
+import { Link } from 'react-router-dom';
+import PostList from '../components/Postlist';  // Import the reusable PostList component
+
+const GalleryPage = () => {
+  return (
+    <div>
+      <h1>Gallery</h1>
+      
+      {/* Reuse the PostList component, passing the "gallery" category */}
+      <PostList category="gallery" />
+      
+      {/* Create new post button */}
+      <Link to="/createpost/gallery">
+        <button>Create New Post</button>
+      </Link>
+    </div>
+  );
+};
+
 
 export default GalleryPage;

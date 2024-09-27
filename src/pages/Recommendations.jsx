@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+/*import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -16,13 +16,18 @@ const RecommendationPage = () => {
         setLoading(false);  
       })
       .catch(err => {
-        setError('Failed to fetch posts');
-        setLoading(false);  
+        setError(err.response ? err.response.data.message : 'An error occurred');
+        setLoading(false); 
       });
   }, []);
 
   if (loading) return <p>Loading posts...</p>;
-  if (error) return <p>{error}</p>;
+  if (error) return ( <div>
+    <p>There are no posts yet</p>
+    {<Link to="/createpost/recommendation">
+    <button>Create New Post</button>
+  </Link>}
+  </div>)
 
   return (
     <div>
@@ -33,13 +38,13 @@ const RecommendationPage = () => {
           {posts.map(post => (
             <li key={post._id}>
               <h2>{post.title}</h2>
-              <p>{post.content.slice(0, 100)}...</p> {/* Short preview of content */}
+              <p>{post.content.slice(0, 100)}...</p> {/* Short preview of content 
 
               <p>
                 Author: {post.author ? post.author.username : 'Unknown'}
               </p>
 
-              {/* Link to the detailed post page */}
+              {/* Link to the detailed post page 
               <Link to={`/recommendation/${post._id}`}>Read More</Link>
             </li>
           ))}
@@ -48,12 +53,34 @@ const RecommendationPage = () => {
         <p>No posts found in the recommendation.</p>
       )}
 
-      {/* Button to create a new post */}
+      {/* Button to create a new post 
       <Link to="/createpost/recommendation">
         <button>Create New Post</button>
       </Link>
     </div>
   );
 };
+*/
+
+import { Link } from 'react-router-dom';
+import PostList from '../components/Postlist';  // Import the reusable PostList component
+
+const RecommendationPage = () => {
+  return (
+    <div>
+      <h1>Recommendation</h1>
+      
+      {/* Reuse the PostList component, passing the "gallery" category */}
+      <PostList category="recommendation" />
+      
+      {/* Create new post button */}
+      <Link to="/createpost/recommendation">
+        <button>Create New Post</button>
+      </Link>
+    </div>
+  );
+};
+
+
 
 export default RecommendationPage;

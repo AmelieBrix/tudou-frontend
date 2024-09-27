@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+/*import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -22,7 +22,12 @@ const SearchAndFindPage = () => {
   }, []);
 
   if (loading) return <p>Loading posts...</p>;
-  if (error) return <p>{error}</p>;
+  if (error) return ( <div>
+    <p>There are no posts yet</p>
+    {<Link to="/createpost/searchandfind">
+    <button>Create New Post</button>
+  </Link>}
+  </div>)
 
   return (
     <div>
@@ -44,7 +49,7 @@ const SearchAndFindPage = () => {
           ))}
         </ul>
       ) : (
-        <p>No posts found in the recommendation.</p>
+        <p>No posts found in the Search and Find.</p>
       )}
 
       <Link to="/createpost/searchandfind">
@@ -53,5 +58,27 @@ const SearchAndFindPage = () => {
     </div>
   );
 };
+
+*/
+import { Link } from 'react-router-dom';
+import PostList from '../components/Postlist';  // Import the reusable PostList component
+
+const SearchAndFindPage = () => {
+  return (
+    <div>
+      <h1>Search and Find</h1>
+      
+      {/* Reuse the PostList component, passing the "gallery" category */}
+      <PostList category="searchandfind" />
+      
+      {/* Create new post button */}
+      <Link to="/createpost/searchandfind">
+        <button>Create New Post</button>
+      </Link>
+    </div>
+  );
+};
+
+
 
 export default SearchAndFindPage;
