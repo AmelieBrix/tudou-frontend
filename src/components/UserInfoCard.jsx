@@ -5,8 +5,8 @@ import { useParams } from 'react-router-dom';
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005"; 
 
-const UserInfoCard = () => {
-  const { username } = useParams();  
+const UserInfoCard = ({setAuthorId, setUsername}) => {
+  const { userId } = useParams();  
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -15,21 +15,23 @@ const UserInfoCard = () => {
   useEffect(() => {
     const token = getToken();  
 
-    console.log('Fetching user with username:', username);  
+    console.log('Fetching user with userid:', userId);  
 
-    if (!username) {
-      setError('Username not found');
+    if (!userId) {
+      setError('User not found');
       return;
     }
 
 
-    axios.get(`${API_URL}/user/${username}`, {
+    axios.get(`${API_URL}/users/${userId}`, {
       headers: {
         Authorization: `Bearer ${token}`,  
       },
     })
     .then(response => {
       setUserInfo(response.data);
+      setAuthorId(response.data._id);
+      setUsername(response.data.username);
       setLoading(false);
     })
     .catch(err => {
@@ -37,7 +39,7 @@ const UserInfoCard = () => {
       setError(`Failed to load user information: ${err.message}`);
       setLoading(false);
     });
-  }, [username, getToken]); 
+  }, [userId, getToken, setAuthorId, setUsername]); 
 
   if (loading) return <p>Loading user info...</p>;
   if (error) return <p>{error}</p>;

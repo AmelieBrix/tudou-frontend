@@ -68,7 +68,6 @@ const SearchAndFindPage = () => {
     <div>
       <h1>Search and Find</h1>
       
-      {/* Reuse the PostList component, passing the "gallery" category */}
       <PostList category="searchandfind" />
       
       {/* Create new post button */}

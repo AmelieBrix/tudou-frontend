@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import PostDetails from '../components/PostDetail';
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";  
 
 const PostDetailPage = () => {
-  const { category, postId } = useParams();  
+  const { postId } = useParams();  
   const [post, setPost] = useState(null);    
   const [comment, setComment] = useState(''); 
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get(`${API_URL}/posts/${postId}`)
@@ -20,17 +21,53 @@ const PostDetailPage = () => {
       .catch(err => {
         setError('Error fetching post details');
       });
-  }, [category, postId]);
+  }, [postId]);
 
   // Function to handle adding a new comment
+
+  const handleDelete = () => {
+    const token = localStorage.getItem('authToken');  // Assuming the authToken is stored in localStorage
+
+    axios.delete(`${API_URL}/posts/${postId}/delete`, {
+      headers: {
+        Authorization: `Bearer ${token}` 
+      }
+    })
+    .then(() => {
+       
+      navigate(`/profile/${post.author.username}`);  
+    })
+    .catch(err => {
+      setError('Error deleting the post');
+    });
+  };
+
+  const handleDeleteComment = (commentId) => {
+    const token = localStorage.getItem('authToken');
+
+    axios.delete(`${API_URL}/posts/comments/${commentId}`, {  
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then(() => {
+      // After successful deletion, remove the comment from the post state
+      setPost(prevPost => ({
+        ...prevPost,
+        comments: prevPost.comments.filter(comment => comment._id !== commentId)
+      }));
+    })
+    .catch(err => {
+      setError('Error deleting the comment');
+    });
+  };
+
   const handleCommentSubmit = (e) => {
     e.preventDefault();
     
-    // Get the token (this assumes you have a function to retrieve it, like from localStorage)
-    const token = localStorage.getItem('authToken');  // Or use your own method to get the token
+    const token = localStorage.getItem('authToken');  
     
-    // Add the token to the Authorization header
-    axios.post(`http://localhost:5005/posts/${postId}/createComments`, 
+    axios.post(`${API_URL}/posts/${postId}/createComments`, 
       { content: comment }, 
       {
         headers: {
@@ -47,9 +84,8 @@ const PostDetailPage = () => {
       .catch(err => setError('Error adding comment'));
 };
 
-  // Function to handle liking the post
   const handleLike = () => {
-    axios.post(`http://localhost:5005/posts/${category}/${postId}/like`)
+    axios.post(`${API_URL}/posts/${postId}/like`)
       .then(response => {
         setPost(response.data);  // Update post with new like
       })
@@ -69,9 +105,15 @@ const PostDetailPage = () => {
         handleCommentSubmit={handleCommentSubmit}
         comment={comment}
         setComment={setComment}
+        handleDelete={handleDelete}
+        handleDeleteComment={handleDeleteComment}
       />
     </div>
   );
 };
 
 export default PostDetailPage;
+
+
+//handleDelete={handleDelete}  
+        //handleEdit={handleEdit} 

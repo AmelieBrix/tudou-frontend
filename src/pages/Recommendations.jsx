@@ -70,8 +70,7 @@ const RecommendationPage = () => {
     <div>
       <h1>Recommendation</h1>
       
-      {/* Reuse the PostList component, passing the "gallery" category */}
-      <PostList category="recommendation" />
+            <PostList category="recommendation" />
       
       {/* Create new post button */}
       <Link to="/createpost/recommendation">

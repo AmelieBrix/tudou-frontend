@@ -23,11 +23,11 @@ function Navbar() {
           <Link to="/searchandfind">
             <button>Search and Find</button>
           </Link>
-          <Link to={`/profile/${user.username}`}>
+          <Link to={`/profile/${user._id}`}>
             <button>My Profile</button>
           </Link>
 
-          <Link to={`/posts/${user._id}`}>
+          <Link to={`/posts/author/${user._id}`}>
             <button>My Posts</button>
           </Link>
           <LanguageSwitcher />  {/* Place language switcher buttons */}

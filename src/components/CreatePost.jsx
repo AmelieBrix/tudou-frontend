@@ -19,7 +19,7 @@ const CreatePost = ({ category }) => {
     // Get the stored token from AuthContext
     const token = getToken();
 
-    axios.post(`${API_URL}/posts/createpost`, {
+    axios.post(`${API_URL}/posts/create`, {
       title,
       content,
       category,  // Automatically pass the category from the prop
