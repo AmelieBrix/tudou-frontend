@@ -43,7 +43,7 @@ const PostDetails = ({ post, handleLike, handleCommentSubmit, comment, setCommen
             <p>{comment.content}</p>
             <p>
               By: {comment.user ? (
-                <Link to={`/profile/${comment.user.username}`}>{comment.user.username}</Link>
+                <Link to={`/profile/${comment.user._id}`}>{comment.user.username}</Link>
               ) : (
                 'Unknown'
               )}

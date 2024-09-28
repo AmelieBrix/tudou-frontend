@@ -35,7 +35,7 @@ const PostDetailPage = () => {
     })
     .then(() => {
        
-      navigate(`/profile/${post.author.username}`);  
+      navigate(`/profile/${post.author._id}`);  
     })
     .catch(err => {
       setError('Error deleting the post');

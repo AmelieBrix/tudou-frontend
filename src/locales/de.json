@@ -1,4 +1,7 @@
 {
     "welcome": "Willkommen",
-    "description": "Dies ist die deutsche Version der Webseite."
+    "description": "Dies ist die deutsche Version der Webseite.",
+    "viewGallery": "Erkunde die Galerie",
+    "viewRecommendations":"Erkunde die Empfehlungen",
+    "viewSearchAndFind": "Erkunde Suchen und Finden"
   }

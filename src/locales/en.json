@@ -1,5 +1,8 @@
 {
     "welcome": "Welcome",
-    "description": "This is the English version of the website."
+    "description": "This is the English version of the website.",
+    "viewGallery": "View Gallery" ,
+    "viewRecommendations":"View Recommendations",
+    "viewSearchAndFind":"View Search and Find"
   }
   
