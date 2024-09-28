@@ -69,7 +69,7 @@ const PostList = ({ category, authorId }) => {
             </li>
           ))
         ) : (
-          <p>No posts found in this category.</p>
+          <p>No posts found yet. Let the others know what you want to do </p>
         )}
       </ul>
     </div>

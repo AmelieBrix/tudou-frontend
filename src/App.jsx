@@ -30,6 +30,7 @@ function App() {
         <Route path="/searchandfind" element={ <IsPrivate><SearchAndFindPage/></IsPrivate> } />
         <Route path="/recommendations" element={ <IsPrivate><RecommendationPage/></IsPrivate> } />
 
+        <Route path="/createpost" element={<IsPrivate><CreatePostPage /></IsPrivate>} />
         <Route path="/createpost/:category" element={ <IsPrivate><CreatePostPage/></IsPrivate> } />
 
         <Route path="/posts/:postId" element={<IsPrivate><PostDetailPage /></IsPrivate>} />

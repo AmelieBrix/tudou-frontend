@@ -1,13 +1,16 @@
 import { useState, useContext } from 'react';
 import axios from 'axios';
-import { AuthContext } from '../context/auth.context';  // Import AuthContext to access the token and user state
+import { AuthContext } from '../context/auth.context';
+import { useParams } from 'react-router-dom';  
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
 
-const CreatePost = ({ category }) => {
+const CreatePost = () => {
+  const { category: routeCategory } = useParams();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [imageUrl, setImageUrl] = useState('');
+  const [category, setCategory] = useState(routeCategory || ''); 
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
 
@@ -72,14 +75,21 @@ const CreatePost = ({ category }) => {
             onChange={(e) => setImageUrl(e.target.value)}
           />
         </div>
-        {/* Opossible to have the catgeory be just read only, ... */}
+    
         <div>
-          <label>Category:</label>
-          <input 
-            type="text" 
-            value={category} 
-            readOnly  
-          />
+          <label htmlFor="category">Category:</label>
+            <select
+              id="category"
+              name="category"
+              value={category}  
+              onChange={(e) => setCategory(e.target.value)}  
+              required
+            >
+              <option value="">Select Category</option>
+              <option value="gallery">Gallery</option>
+              <option value="searchandfind">Search & Find</option>
+              <option value="recommendation">Recommendation</option>
+            </select>
         </div>
         <button type="submit">Create Post</button>
       </form>
@@ -90,3 +100,4 @@ const CreatePost = ({ category }) => {
 };
 
 export default CreatePost;
+
