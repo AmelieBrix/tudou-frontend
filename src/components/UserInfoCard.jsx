@@ -5,6 +5,9 @@ import { useParams } from 'react-router-dom';
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005"; 
 
+const DEFAULT_IMAGE_URL = 'https://tudou-backend.onrender.com/public/images/default.png'; // maybe add localhost?
+
+
 const UserInfoCard = ({setAuthorId, setUsername}) => {
   const { userId } = useParams();  
   const [userInfo, setUserInfo] = useState(null);
@@ -47,8 +50,8 @@ const UserInfoCard = ({setAuthorId, setUsername}) => {
   return (
     <div className="user-info-card">
       <div className="user-info-card__header">
-        <img 
-          src={userInfo.profilePicture || '/default.png'} 
+      <img 
+          src={userInfo.profilePicture || DEFAULT_IMAGE_URL}  // Use default image if profilePicture is missing
           alt={`${userInfo.username}'s profile`} 
           className="user-info-card__image"
         />

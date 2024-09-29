@@ -17,6 +17,9 @@ import ProfilePage from "./pages/ProfilePage";
 import UserPostsPage from "./pages/UserPostsPage";
 import PostEditPage from "./pages/EditPostPage";
 import EditProfilePage from "./pages/EditProfilePage";
+import ChatPage from "./components/ChatPage";  // Add this import
+
+
 function App() {
   return (
     <div className="App">
@@ -40,7 +43,10 @@ function App() {
         <Route path="/profile/:userId" element={<IsPrivate><ProfilePage /></IsPrivate>} />
         <Route path="/profile/:userId/edit" element={<IsPrivate><EditProfilePage /></IsPrivate>} />  
 
-        </Routes>
+        {/* The Chat Route */}
+        <Route path="/chat/:chatId" element={<IsPrivate><ChatPage /></IsPrivate>} />
+
+      </Routes>
       
     </div>
   );

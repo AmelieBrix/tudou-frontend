@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import { useContext } from "react";
 
-const DEFAULT_IMAGE_URL = 'https://tudou-backend.onrender.com/public/images/default.png';
+const DEFAULT_IMAGE_URL = 'https://res.cloudinary.com/dfrhg0iqs/image/upload/v1727615596/PostDefault_ua9vkv.png';
 
 const PostDetails = ({ post, handleLike, handleCommentSubmit, comment, setComment, handleDelete, handleDeleteComment }) => {
   const { user } = useContext(AuthContext);

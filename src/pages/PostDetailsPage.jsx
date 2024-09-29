@@ -5,6 +5,8 @@ import PostDetails from '../components/PostDetail';
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";  
 
+
+
 const PostDetailPage = () => {
   const { postId } = useParams();  
   const [post, setPost] = useState(null);    

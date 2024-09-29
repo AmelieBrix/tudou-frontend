@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";  // Adjust as per your setup
+const DEFAULT_IMAGE_URL = 'https://console.cloudinary.com/console/c-511bcbc8f3c7007e75765c1b668116/media_library/search/asset/07761bdaff339e4c2fcc9229597770f7/manage?q=&view_mode=mosaic&context=manage';
+
 
 const PostEditPage = () => {
     const { postId } = useParams();  // Extract the post ID from the URL
@@ -105,13 +107,15 @@ const PostEditPage = () => {
               <option value="recommendation">Recommendation</option>
             </select>
     
-            {post.imageUrl && (
-              <div>
-                <h3>Current Post Image:</h3>
-                <img src={post.imageUrl} alt={post.title} style={{ width: '200px', height: 'auto' }} />
-              </div>
-            )}
-    
+            <div>
+              <h3>Current Post Image:</h3>
+              <img
+                src={post.imageUrl || DEFAULT_IMAGE_URL}  // Use post image or fallback to default image
+                alt={post.title}
+                style={{ width: '200px', height: 'auto' }}
+              />
+            </div>
+
             <label htmlFor="postImage">Change Post Image:</label>
             <input
               type="file"
