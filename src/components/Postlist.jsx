@@ -57,6 +57,9 @@ const PostList = ({ category, authorId }) => {
           posts.map(post => (
             <li key={post._id}>
               <h2>{post.title}</h2>
+              {post.imageUrl && (
+                <img src={post.imageUrl} alt={post.title} style={{ width: '200px', height: 'auto' }} />
+              )}
               <p>{post.content.slice(0, 100)}...</p>
               <p>
                 Author: {post.author ? (

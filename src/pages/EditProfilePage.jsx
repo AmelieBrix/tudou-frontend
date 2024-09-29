@@ -8,7 +8,8 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
 
 const EditProfilePage = () => {
   const { user, getToken } = useContext(AuthContext); // Get user and token
-  const [profile, setProfile] = useState({ first_Name: '', last_Name: '', username: '', email: '', profilePicture: '', imageUrl: '' , currentPassword: '', newPassword: ''  });
+  const [profile, setProfile] = useState({ first_Name: '', last_Name: '', username: '', email: '', profilePicture: '', imageUrl: '', currentPassword: '', newPassword: '' });
+  const [profilePicture, setProfilePicture] = useState(null); // For file upload
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const token = getToken();
@@ -22,22 +23,23 @@ const EditProfilePage = () => {
 
   useEffect(() => {
     if (user) {
-        console.log('right here--> ',user.first_Name);
-    // Load current user data into the form
-    setProfile({
-     first_Name: user.first_Name || '',   
-      last_Name: user.last_Name || '',     
-      username: user.username || '',       
-      email: user.email || '',             
-      profilePicture: user.profilePicture || '',
-    });
-  }}, [user]);
+      console.log('right here--> ', user.first_Name);
+      // Load current user data into the form
+      setProfile({
+        first_Name: user.first_Name || '',
+        last_Name: user.last_Name || '',
+        username: user.username || '',
+        email: user.email || '',
+        profilePicture: user.profilePicture || '',
+      });
+    }
+  }, [user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProfile(prevProfile => ({
       ...prevProfile,
-      [name]: value
+      [name]: value || ''
     }));
   };
 
@@ -45,28 +47,46 @@ const EditProfilePage = () => {
     e.preventDefault();
 
     console.log('Auth profile check:', profile);
-    console.log('User ID:', user._id); 
+    console.log('User ID:', user._id);
 
-    axios.put(`${API_URL}/users/${user._id}/edit`, profile, {
-        headers: { Authorization: `Bearer ${token}` }
+    const formData = new FormData();
+    formData.append('first_Name', profile.first_Name);
+    formData.append('last_Name', profile.last_Name);
+    formData.append('username', profile.username);
+    formData.append('email', profile.email);
+
+    // Add current and new passwords if they're set
+    if (profile.currentPassword) formData.append('currentPassword', profile.currentPassword);
+    if (profile.newPassword) formData.append('newPassword', profile.newPassword);
+
+    // If a new profile picture is uploaded, append it
+    if (profilePicture) {
+      formData.append('profilePicture', profilePicture); // Append the uploaded file
+    } else {
+      formData.append('profilePicture', profile.profilePicture); // Use existing URL if no file is uploaded
+    }
+
+
+    axios.put(`${API_URL}/users/${user._id}/edit`, formData, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(response => {
+        console.log('Profile updated:', response.data);
+
+        // If a new token is returned, store it
+        if (response.data.authToken) {
+          // Replace the old token with the new one
+          localStorage.setItem('authToken', response.data.authToken);
+        }
+
+        // Redirect to the user's profile page
+        navigate(`/profile/${user._id}`);
       })
-        .then(response => {
-          console.log('Profile updated:', response.data);
-    
-          // If a new token is returned, store it
-          if (response.data.authToken) {
-            // Replace the old token with the new one
-            localStorage.setItem('authToken', response.data.authToken);
-          }
-    
-          // Redirect to the user's profile page
-          navigate(`/profile/${user._id}`); 
-        })
-        .catch(err => {
-          setError('Error updating profile');
-          console.error(err);
-        });
-    };
+      .catch(err => {
+        setError('Error updating profile');
+        console.error(err);
+      });
+  };
 
   return (
     <div>
@@ -74,7 +94,7 @@ const EditProfilePage = () => {
       {error && <p>{error}</p>}
       <form onSubmit={handleSubmit}>
 
-      <label>First Name</label>
+        <label>First Name</label>
         <input type="text" name="first_Name" value={profile.first_Name || ''} onChange={handleChange} />
 
         <label>Last Name</label>
@@ -87,21 +107,22 @@ const EditProfilePage = () => {
         <input type="email" name="email" value={profile.email || ''} onChange={handleChange} required />
 
         <label>Current Password</label>
-        <input type="password" name="currentPassword" onChange={handleChange} value={profile.currentPassword}  placeholder="Enter current password" />
+        <input type="password" name="currentPassword" onChange={handleChange} value={profile.currentPassword} placeholder="Enter current password" />
 
         <label>New Password</label>
-        <input type="text" name="newPassword" onChange={handleChange} value={profile.newPassword}  placeholder="Enter new password" />
+        <input type="text" name="newPassword" onChange={handleChange} value={profile.newPassword} placeholder="Enter new password" />
 
-        <label>Profile Picture URL</label>
-        <input type="text" name="profilePicture" value={profile.profilePicture} onChange={handleChange} />
+        <label>Profile Picture</label>
+        <input type="file" name="profilePicture" onChange={(e) => setProfilePicture(e.target.files[0])} />
+
 
         <button type="submit">Update Profile</button>
       </form>
 
-      <DeleteUser userId={user._id}/>
+      <DeleteUser userId={user._id} />
 
 
-      
+
 
     </div>
   );

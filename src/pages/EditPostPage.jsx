@@ -7,9 +7,10 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";  // Adj
 const PostEditPage = () => {
     const { postId } = useParams();  // Extract the post ID from the URL
     const [post, setPost] = useState({ title: '', content: '', category: '', imageUrl: '' });  // State to hold post data
-    const [error, setError] = useState(null);  // State for errors
-    const [loading, setLoading] = useState(true);  // State for loading
-    const navigate = useNavigate();  // To navigate after form submission
+    const [error, setError] = useState(null);  
+    const [loading, setLoading] = useState(true);
+    const [postImage, setPostImage] = useState(null);  
+    const navigate = useNavigate(); 
 
     useEffect(() => {
         axios.get(`${API_URL}/posts/${postId}`)
@@ -23,14 +24,28 @@ const PostEditPage = () => {
           });
       }, [postId]);
 
+      const handleImageChange = (e) => {
+        setPostImage(e.target.files[0]);  // Set the selected image file
+      };
+
       const handleSubmit = (e) => {
         e.preventDefault();
         const token = localStorage.getItem('authToken');  // Get the token from localStorage
     
+        const formData = new FormData();
+        formData.append('title', post.title);
+        formData.append('content', post.content);
+        formData.append('category', post.category);
+        
+        if (postImage) {
+          formData.append('postImage', postImage);  // Append the image file if a new one is uploaded
+        }
+
         // Send updated post data to the backend
-        axios.put(`${API_URL}/posts/${postId}/edit`, post, {
+        axios.put(`${API_URL}/posts/${postId}/edit`, formData, {
           headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data'
           }
         })
         .then(() => {
@@ -90,13 +105,19 @@ const PostEditPage = () => {
               <option value="recommendation">Recommendation</option>
             </select>
     
-            <label htmlFor="imageUrl">Image URL:</label>
+            {post.imageUrl && (
+              <div>
+                <h3>Current Post Image:</h3>
+                <img src={post.imageUrl} alt={post.title} style={{ width: '200px', height: 'auto' }} />
+              </div>
+            )}
+    
+            <label htmlFor="postImage">Change Post Image:</label>
             <input
-              type="text"
-              id="imageUrl"
-              name="imageUrl"
-              value={post.imageUrl}
-              onChange={handleChange}
+              type="file"
+              id="postImage"
+              name="postImage"
+              onChange={handleImageChange}  // Capture the new image file
             />
     
             <button type="submit">Update Post</button>

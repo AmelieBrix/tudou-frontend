@@ -9,12 +9,16 @@ const CreatePost = () => {
   const { category: routeCategory } = useParams();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
+  const [postImage, setPostImage] = useState(null); // File input for image upload
   const [category, setCategory] = useState(routeCategory || ''); 
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
 
   const { getToken } = useContext(AuthContext);  // Get the token from AuthContext
+
+  const handleImageChange = (e) => {
+    setPostImage(e.target.files[0]); // Store the selected file
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,22 +26,27 @@ const CreatePost = () => {
     // Get the stored token from AuthContext
     const token = getToken();
 
-    axios.post(`${API_URL}/posts/create`, {
-      title,
-      content,
-      category,  // Automatically pass the category from the prop
-      imageUrl,
-    }, {
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('content', content);
+    formData.append('category', category);
+    
+    if (postImage) {
+      formData.append('postImage', postImage); // Add the image file to FormData
+    }
+
+    axios.post(`${API_URL}/posts/create`, formData, {
       headers: {
-        Authorization: `Bearer ${token}`,  // Use the token in the request headers
-      }
-    })
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data', // Set multipart form data
+      }})
+
     .then(response => {
       setSuccess('Post created successfully!');
       setError(null);
       setTitle('');  // Clear the form fields after success
       setContent('');
-      setImageUrl('');
+      setPostImage(null);
     })
     .catch(err => {
       setSuccess(null);
@@ -68,11 +77,10 @@ const CreatePost = () => {
           />
         </div>
         <div>
-          <label>Image URL:</label>
+          <label>Post Image:</label>
           <input 
-            type="text" 
-            value={imageUrl} 
-            onChange={(e) => setImageUrl(e.target.value)}
+            type="file"  
+            onChange={handleImageChange}
           />
         </div>
     

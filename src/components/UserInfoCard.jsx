@@ -48,7 +48,7 @@ const UserInfoCard = ({setAuthorId, setUsername}) => {
     <div className="user-info-card">
       <div className="user-info-card__header">
         <img 
-          src={userInfo.profilePicture || '/default-profile.png'} 
+          src={userInfo.profilePicture || '/default.png'} 
           alt={`${userInfo.username}'s profile`} 
           className="user-info-card__image"
         />

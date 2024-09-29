@@ -17,6 +17,11 @@ const PostDetails = ({ post, handleLike, handleCommentSubmit, comment, setCommen
       </p>
       <p>{post.category}</p>
 
+       {/* Display post image if available */}
+       {post.imageUrl && (
+        <img src={post.imageUrl} alt={post.title} style={{ width: '400px', height: 'auto' }} />
+      )}
+
 
       <p>Created At: {new Date(post.createdAt).toLocaleDateString()}</p>
       <p>{post.content}</p>

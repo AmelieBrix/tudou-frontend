@@ -71,7 +71,7 @@ const PostDetailPage = () => {
       { content: comment }, 
       {
         headers: {
-          Authorization: `Bearer ${token}`  // Send the token as a Bearer token
+          Authorization: `Bearer ${token}`  
         }
       })
       .then(response => {
@@ -79,7 +79,7 @@ const PostDetailPage = () => {
           ...prevPost,
           comments: [...prevPost.comments, response.data.comment]
         }));
-        setComment('');  // Clear comment input
+        setComment('');  
       })
       .catch(err => setError('Error adding comment'));
 };
