@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import { useContext } from "react";
 
+const DEFAULT_IMAGE_URL = 'https://tudou-backend.onrender.com/public/images/default.png';
+
 const PostDetails = ({ post, handleLike, handleCommentSubmit, comment, setComment, handleDelete, handleDeleteComment }) => {
   const { user } = useContext(AuthContext);
 
@@ -19,7 +21,7 @@ const PostDetails = ({ post, handleLike, handleCommentSubmit, comment, setCommen
 
        {/* Display post image if available */}
        {post.imageUrl && (
-        <img src={post.imageUrl} alt={post.title} style={{ width: '400px', height: 'auto' }} />
+        <img src={post.imageUrl || DEFAULT_IMAGE_URL} alt={post.title} style={{ width: '400px', height: 'auto' }} />
       )}
 
 
