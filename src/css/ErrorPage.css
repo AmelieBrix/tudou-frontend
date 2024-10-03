@@ -1,0 +1,106 @@
+/* Mobile-first approach */
+.error-page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: var(--background-color);
+    padding: 2rem;
+  }
+  
+  .error-card {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 30rem;
+  }
+  
+  .error-card h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .error-card p {
+    font-size: 1.6rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* Error Button styling based on .nav-button */
+  .error-button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.6rem; /* Adjusted padding */
+    font-size: 1.4rem; /* Slightly smaller font size */
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%; /* Full width of container */
+    box-sizing: border-box; /* Include padding and border in width calculation */
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis; /* Ellipsis for overflowing text */
+  }
+  
+  .error-button:hover {
+    background-color: white; /* Apply hover color */
+  }
+  
+  .error-button:focus,
+  .error-button:active {
+    background-color: var(--primary-color-hover); /* Same as hover */
+    color: white;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1); /* Focus outline */
+  }
+  
+  /* Tablet styles */
+  @media (min-width: 768px) {
+    .error-card {
+      padding: 3rem;
+      max-width: 35rem;
+    }
+  
+    .error-card h1 {
+      font-size: 3rem;
+    }
+  
+    .error-card p {
+      font-size: 1.8rem;
+    }
+  
+    .error-button {
+      padding: 0.8rem 2rem; /* Adjust button padding */
+      font-size: 1.6rem;
+    }
+  }
+  
+  /* Desktop styles */
+  @media (min-width: 1024px) {
+    .error-page-container {
+      height: 90vh;
+    }
+  
+    .error-card {
+      padding: 4rem;
+      max-width: 40rem;
+    }
+  
+    .error-card h1 {
+      font-size: 3.5rem;
+    }
+  
+    .error-card p {
+      font-size: 2rem;
+    }
+  
+    .error-button {
+      font-size: 1.8rem;
+      padding: 1rem 2.5rem;
+    }
+  }
+  

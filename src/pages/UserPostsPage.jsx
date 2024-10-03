@@ -1,6 +1,7 @@
 import { useParams, Navigate } from 'react-router-dom';
 import PostList from '../components/Postlist/Postlist';  
 import { Link } from 'react-router-dom';
+import '../css/UserPostsPage.css'; // Link to your custom CSS file
 
 const UserPostsPage = () => {
   const { authorId } = useParams();  
@@ -10,11 +11,13 @@ const UserPostsPage = () => {
   }
 
   return (
-    <div>
-      <h1>My Posts</h1>
+    <div className="user-post-page-container">
+      <h1 className="user-post-title">My Posts</h1>
       <PostList authorId={authorId} />
 
-      <Link to={"/createpost/"}>Create Post</Link>
+      <Link to="/createpost/" className="create-post-button">
+        Create Post
+      </Link>
     </div>
   );
 };

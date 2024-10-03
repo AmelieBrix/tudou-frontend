@@ -14,7 +14,7 @@ button {
   }
   
   button:disabled {
-    background-color: #ccc;
+    background-color: #005bb7;
     cursor: not-allowed;
   }
   
@@ -36,6 +36,6 @@ button {
   
   .button-outline:hover {
     background-color: var(--primary-color);
-    color: white;
+    color: #005bb7;
   }
   

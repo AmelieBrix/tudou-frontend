@@ -65,7 +65,7 @@ function Navbar() {
                   <Link to={`/profile/${user._id}`}>
                     <button className="nav-button" onClick={() => setIsMenuOpen(false)}>My Profile</button>
                   </Link>
-                  <button className="nav-button" onClick={() => { logOutUser(); setIsMenuOpen(false); }}>Logout</button>
+                  <button className="navbar-logout" onClick={() => { logOutUser(); setIsMenuOpen(false); }}>Logout</button>
                 </div>
               </div>
             )}

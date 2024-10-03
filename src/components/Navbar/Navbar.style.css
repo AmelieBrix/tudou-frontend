@@ -39,6 +39,19 @@
   margin-top: 1rem;  
 }
 
+.navbar-logout {
+  margin-top: 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.6rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+  }
+
 
 .navbar-right {
   display: flex;
@@ -88,17 +101,32 @@
   background-color: var(--primary-color);
   color: white;
   border: none;
-  padding: 1rem 2rem;
-  font-size: 1.6rem;
+  padding: 0.8rem 1.6rem; /* Adjusted padding to ensure it fits */
+  font-size: 1.4rem; /* Decreased font size slightly */
   border-radius: 0.5rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  width: 100%;
+  width: 100%; /* Ensures buttons take full width of container */
+  box-sizing: border-box; /* Ensures padding and border are included in the width */
+  white-space: nowrap; /* Prevents text from wrapping */
+  overflow: hidden; /* Hides any overflowing content */
+  text-overflow: ellipsis; /* Adds ellipsis (...) if text overflows */
 }
+
 
 .nav-button:hover {
   background-color: var(--primary-color-hover);
 }
+
+.nav-button:focus, 
+.nav-button:active {
+  background-color: var(--primary-color-hover); /* Same as hover */
+  color: #00a984; 
+  
+  outline: none; 
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle focus outline */
+}
+
 
 
 .language-switcher {

@@ -35,7 +35,7 @@ function App() {
         <Route path="/" element={ <HomePage/> } />
         <Route path="/signup" element={ <IsAnon><SignupPage/></IsAnon> } />
         <Route path="/login" element={ <IsAnon><LoginPage/></IsAnon> } />
-        <Route path="/error" element={ <IsAnon><ErrorPage/></IsAnon> } />
+        <Route path="/*" element={ <IsAnon><ErrorPage/></IsAnon> } />
 
         <Route path="/gallery" element={ <IsPrivate><GalleryPage/></IsPrivate> } />
         <Route path="/searchandfind" element={ <IsPrivate><SearchAndFindPage/></IsPrivate> } />
