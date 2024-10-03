@@ -1,7 +1,9 @@
 import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { AuthContext } from '../context/auth.context';
+import { AuthContext } from '../../context/auth.context';
 import { useParams } from 'react-router-dom';  
+import Spinner from '../Spinner/Spinner';
+import './UserInfoCard.css';
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005"; 
 
@@ -38,20 +40,26 @@ const UserInfoCard = ({setAuthorId, setUsername}) => {
       setLoading(false);
     })
     .catch(err => {
-      console.error('Failed to load user information', err);
       setError(`Failed to load user information: ${err.message}`);
       setLoading(false);
     });
   }, [userId, getToken, setAuthorId, setUsername]); 
 
-  if (loading) return <p>Loading user info...</p>;
+  if (loading) {
+    return (
+      <div className="user-info-spinner">
+        <Spinner />
+        <p>Loading user info...</p>
+      </div>
+    );
+  }
   if (error) return <p>{error}</p>;
 
   return (
     <div className="user-info-card">
       <div className="user-info-card__header">
-      <img 
-          src={userInfo.profilePicture || DEFAULT_IMAGE_URL}  // Use default image if profilePicture is missing
+        <img 
+          src={userInfo.profilePicture || DEFAULT_IMAGE_URL}
           alt={`${userInfo.username}'s profile`} 
           className="user-info-card__image"
         />

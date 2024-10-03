@@ -1,13 +1,21 @@
-import "./App.css";
+import "./css/App.css";
 import './i18n'; 
-import { Routes, Route } from "react-router-dom"; // <== IMPORT
+import { Routes, Route } from "react-router-dom"; 
+import './css/App.css';
+import './css/Button.css'
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Navbar from "./components/Navbar";     // <== IMPORT
-import HomePage from "./pages/HomePage";     // <== IMPORT
-import SignupPage from "./pages/SignupPage"; 
-import LoginPage from "./pages/LoginPage";
+
+import Navbar from "./components/Navbar/Navbar";     
+import ChatPage from "./components/ChatPage/ChatPage";  
 import IsAnon from "./components/IsAnon";
 import IsPrivate from "./components/IsPrivate";
+
+import HomePage from "./pages/HomePage"; 
+import SignupPage from "./pages/SignupPage"; 
+import LoginPage from "./pages/LoginPage";
 import GalleryPage from "./pages/GalleryPage";
 import RecommendationPage from "./pages/Recommendations";
 import SearchAndFindPage from "./pages/SearchFind";
@@ -17,17 +25,17 @@ import ProfilePage from "./pages/ProfilePage";
 import UserPostsPage from "./pages/UserPostsPage";
 import PostEditPage from "./pages/EditPostPage";
 import EditProfilePage from "./pages/EditProfilePage";
-import ChatPage from "./components/ChatPage";  // Add this import
-
+import ErrorPage from "./pages/ErrorPage";
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <Navbar />
       <Routes>      
         <Route path="/" element={ <HomePage/> } />
         <Route path="/signup" element={ <IsAnon><SignupPage/></IsAnon> } />
         <Route path="/login" element={ <IsAnon><LoginPage/></IsAnon> } />
+        <Route path="/error" element={ <IsAnon><ErrorPage/></IsAnon> } />
 
         <Route path="/gallery" element={ <IsPrivate><GalleryPage/></IsPrivate> } />
         <Route path="/searchandfind" element={ <IsPrivate><SearchAndFindPage/></IsPrivate> } />
@@ -43,8 +51,8 @@ function App() {
         <Route path="/profile/:userId" element={<IsPrivate><ProfilePage /></IsPrivate>} />
         <Route path="/profile/:userId/edit" element={<IsPrivate><EditProfilePage /></IsPrivate>} />  
 
-        {/* The Chat Route */}
         <Route path="/chat/:chatId" element={<IsPrivate><ChatPage /></IsPrivate>} />
+        
 
       </Routes>
       

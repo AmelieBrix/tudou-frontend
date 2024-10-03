@@ -1,5 +1,5 @@
 import { useParams, Navigate } from 'react-router-dom';
-import PostList from '../components/Postlist';  
+import PostList from '../components/Postlist/Postlist';  
 import { Link } from 'react-router-dom';
 
 const UserPostsPage = () => {
@@ -12,7 +12,6 @@ const UserPostsPage = () => {
   return (
     <div>
       <h1>My Posts</h1>
-      {/* Display the posts by the user */}
       <PostList authorId={authorId} />
 
       <Link to={"/createpost/"}>Create Post</Link>

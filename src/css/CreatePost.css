@@ -1,0 +1,72 @@
+.form-container {
+    background-color: beige;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem;
+    text-align: center;
+  }
+  
+  .form-card {
+    background-color: #00a984;
+    border: 1px solid #ddd;
+    border-radius: 1rem;
+    padding: 4rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: white;
+    width: 40rem;
+  }
+  
+  .form-card h2 {
+    margin-bottom: 2rem;
+    font-size: 3rem;
+  }
+  
+  .form-card input[type="text"],
+  .form-card textarea,
+  .form-card input[type="file"],
+  .form-card select {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 1.6rem;
+  }
+  
+  /* Button styles */
+  .btn {
+    display: inline-block;
+    margin: 1rem 0;
+    padding: 1rem 2rem;
+    background-color: #fff;
+    color: #00a984;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1.8rem;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .btn:hover {
+    background-color: #008d6d;
+    color: white;
+  }
+  
+  .success-message {
+    color: green;
+    font-size: 1.6rem;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 1.6rem;
+  }
+  
+  @media (min-width: 769px) {
+    .form-card {
+      width: 100%;
+      padding: 2rem;
+    }
+  }
+  

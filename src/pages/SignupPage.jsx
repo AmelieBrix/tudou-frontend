@@ -2,6 +2,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Form, Button, Container, Alert } from "react-bootstrap";  
+import '../css/Signup.css'
+
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5005';
 
@@ -30,7 +33,6 @@ function SignupPage(props) {
 
     const handleSignupSubmit = (e) => {
         e.preventDefault();
-        console.log("I am the submit button")
         if (!firstName || !lastName || !email || !password || !username) {
             setErrorMessage("All fields are required.");
             return;
@@ -63,91 +65,92 @@ function SignupPage(props) {
                 // Handle any errors and set error message in state
                 const errorDescription = error.response?.data?.message || "Something went wrong. Please try again.";
                 setErrorMessage(errorDescription);
+                navigate(`/error`);
             });
     };
-    /*
-            const requestBody = {
-                first_Name: firstName,   // Correct field name
-                last_Name: lastName,
-                email,
-                password,
-                username
-            };
-    
-            axios.post(`${API_URL}/auth/signup`, requestBody)
-                .then(() => {
-                    // Redirect to the login page on success
-                    console.log("I AM HERE IN THE AXIOS POST!");
-                    navigate('/login');
-                })
-                .catch((error) => {
-                    // Handle any errors and set error message in state
-                    const errorDescription = error.response?.data?.message || "Something went wrong. Please try again.";
-                    setErrorMessage(errorDescription);
-                });
-        };*/
 
     return (
-        <div className="SignupPage">
-            <h1>Sign Up</h1>
+        <Container className="signup-page">
+            <div className="form-card">
+                <h2>Sign Up</h2>
+                <Form onSubmit={handleSignupSubmit}>
+                    <Form.Group className="mb-3">
+                        <Form.Label>First Name</Form.Label>
+                        <Form.Control 
+                            type="text" 
+                            value={firstName} 
+                            onChange={handleFirstName} 
+                            placeholder="Enter first name" 
+                            required 
+                        />
+                    </Form.Group>
 
-            <form onSubmit={handleSignupSubmit}>
-                <label>First Name:</label>
-                <input
-                    type="text"
-                    name="firstName"
-                    value={firstName}
-                    onChange={handleFirstName}
-                />
+                    <Form.Group className="mb-3">
+                        <Form.Label>Last Name</Form.Label>
+                        <Form.Control 
+                            type="text" 
+                            value={lastName} 
+                            onChange={handleLastName} 
+                            placeholder="Enter last name" 
+                            required 
+                        />
+                    </Form.Group>
 
-                <label>Last Name:</label>
-                <input
-                    type="text"
-                    name="lastName"
-                    value={lastName}
-                    onChange={handleLastName}
-                />
+                    <Form.Group className="mb-3">
+                        <Form.Label>Username</Form.Label>
+                        <Form.Control 
+                            type="text" 
+                            value={username} 
+                            onChange={handleUsername} 
+                            placeholder="Enter username" 
+                            required 
+                        />
+                    </Form.Group>
 
-                <label>Username:</label>
-                <input
-                    type="text"
-                    name="username"
-                    value={username}
-                    onChange={handleUsername}
-                />
+                    <Form.Group className="mb-3">
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control 
+                            type="email" 
+                            value={email} 
+                            onChange={handleEmail} 
+                            placeholder="Enter email" 
+                            required 
+                        />
+                    </Form.Group>
 
-                <label>Email:</label>
-                <input
-                    type="email"
-                    name="email"
-                    value={email}
-                    onChange={handleEmail}
-                />
+                    <Form.Group className="mb-3">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control 
+                            type="password" 
+                            value={password} 
+                            onChange={handlePassword} 
+                            placeholder="Enter password" 
+                            required 
+                        />
+                    </Form.Group>
 
-                <label>Password:</label>
-                <input
-                    type="password"
-                    name="password"
-                    value={password}
-                    onChange={handlePassword}
-                />
+                    <Form.Group className="mb-3">
+                        <Form.Label>Profile Picture</Form.Label>
+                        <Form.Control 
+                            type="file" 
+                            onChange={handleProfilePictureChange} 
+                        />
+                    </Form.Group>
 
-                <label>Profile Picture:</label> {/* New file input for profile picture */}
-                <input
-                    type="file"
-                    name="profilePicture"
-                    onChange={handleProfilePictureChange}
-                />
+                    {errorMessage && (
+                        <Alert variant="danger" className="mt-3">
+                            {errorMessage}
+                        </Alert>
+                    )}
 
-                <button type="submit">Sign Up</button>
-            </form>
+                    <Button variant="primary" type="submit" className="btn-block">
+                        Sign Up
+                    </Button>
+                </Form>
 
-            {/* Display error messages if any */}
-            {errorMessage && <p className="error-message">{errorMessage}</p>}
-
-            <p>Already have an account?</p>
-            <Link to="/login">Login</Link>
-        </div>
+                <p className="mt-3">Already have an account? <Link to="/login">Login</Link></p>
+            </div>
+        </Container>
     );
 }
 

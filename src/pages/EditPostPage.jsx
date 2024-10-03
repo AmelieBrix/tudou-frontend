@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Spinner from '../components/Spinner/Spinner';
+import "../css/EditPost.css";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";  // Adjust as per your setup
 const DEFAULT_IMAGE_URL = 'https://console.cloudinary.com/console/c-511bcbc8f3c7007e75765c1b668116/media_library/search/asset/07761bdaff339e4c2fcc9229597770f7/manage?q=&view_mode=mosaic&context=manage';
@@ -65,69 +67,85 @@ const PostEditPage = () => {
           [name]: value  // Dynamically update either the title, content, category, or imageUrl
         }));
       };
-    
-      if (loading) return <p>Loading post data...</p>;  
+     
+      if (loading) {
+        return (
+          <>
+            <Spinner />
+            <p>Loading post data...</p>
+          </>
+        );
+      }
+
     
       return (
-        <div>
-          {error && <p>{error}</p>}  
-          <h1>Edit Post</h1>
-          <form onSubmit={handleSubmit}>
-          
-            <label htmlFor="title">Title:</label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              value={post.title}
-              onChange={handleChange}
-              required
-            />
-    
-            <label htmlFor="content">Content:</label>
-            <textarea
-              id="content"
-              name="content"
-              value={post.content}
-              onChange={handleChange}
-              required
-            />
-    
-            <label htmlFor="category">Category:</label>
-            <select
-              id="category"
-              name="category"
-              value={post.category}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Select Category</option>
-              <option value="gallery">Gallery</option>
-              <option value="searchandfind">Search & Find</option>
-              <option value="recommendation">Recommendation</option>
-            </select>
-    
-            <div>
-              <h3>Current Post Image:</h3>
-              <img
-                src={post.imageUrl || DEFAULT_IMAGE_URL}  // Use post image or fallback to default image
-                alt={post.title}
-                style={{ width: '200px', height: 'auto' }}
-              />
-            </div>
+        <div className="form-container">
+            <div className="form-card">
+                {error && <p className="error-message">{error}</p>}
+                <h2>Edit Post</h2>
 
-            <label htmlFor="postImage">Change Post Image:</label>
-            <input
-              type="file"
-              id="postImage"
-              name="postImage"
-              onChange={handleImageChange}  // Capture the new image file
-            />
-    
-            <button type="submit">Update Post</button>
-          </form>
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <label htmlFor="title">Title:</label>
+                        <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            value={post.title}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="content">Content:</label>
+                        <textarea
+                            id="content"
+                            name="content"
+                            value={post.content}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="category">Category:</label>
+                        <select
+                            id="category"
+                            name="category"
+                            value={post.category}
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value="">Select Category</option>
+                            <option value="gallery">Gallery</option>
+                            <option value="searchandfind">Search & Find</option>
+                            <option value="recommendation">Recommendation</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <h3>Current Post Image:</h3>
+                        <img
+                            src={post.imageUrl || DEFAULT_IMAGE_URL}
+                            alt={post.title}
+                            className="post-image-preview"
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="postImage">Change Post Image:</label>
+                        <input
+                            type="file"
+                            id="postImage"
+                            name="postImage"
+                            onChange={handleImageChange}
+                        />
+                    </div>
+
+                    <button type="submit" className="btn">Update Post</button>
+                </form>
+            </div>
         </div>
-      );
-    };
+    );
+};
     
     export default PostEditPage;

@@ -3,6 +3,7 @@
     "description": "This is the English version of the website.",
     "viewGallery": "View Gallery" ,
     "viewRecommendations":"View Recommendations",
-    "viewSearchAndFind":"View Search and Find"
+    "viewSearchAndFind":"View Search and Find",
+    "error": "There has been an error"
   }
   

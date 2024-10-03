@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/auth.context';
 import { useParams } from 'react-router-dom';  
+import "../css/CreatePost.css";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
 
@@ -56,54 +57,53 @@ const CreatePost = () => {
   };
 
   return (
-    <div>
-      <h2>Create a new post in {category.charAt(0).toUpperCase() + category.slice(1)}</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Title:</label>
-          <input 
-            type="text" 
-            value={title} 
-            onChange={(e) => setTitle(e.target.value)} 
-            required
-          />
-        </div>
-        <div>
-          <label>Content:</label>
-          <textarea 
-            value={content} 
-            onChange={(e) => setContent(e.target.value)} 
-            required
-          />
-        </div>
-        <div>
-          <label>Post Image:</label>
-          <input 
-            type="file"  
-            onChange={handleImageChange}
-          />
-        </div>
-    
-        <div>
-          <label htmlFor="category">Category:</label>
-            <select
-              id="category"
-              name="category"
-              value={category}  
-              onChange={(e) => setCategory(e.target.value)}  
-              required
-            >
-              <option value="">Select Category</option>
-              <option value="gallery">Gallery</option>
-              <option value="searchandfind">Search & Find</option>
-              <option value="recommendation">Recommendation</option>
-            </select>
-        </div>
-        <button type="submit">Create Post</button>
-      </form>
-      {success && <p style={{ color: 'green' }}>{success}</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-    </div>
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="title">Title:</label>
+        <input 
+          type="text" 
+          id="title"
+          value={title} 
+          onChange={(e) => setTitle(e.target.value)} 
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="content">Content:</label>
+        <textarea 
+          id="content"
+          value={content} 
+          onChange={(e) => setContent(e.target.value)} 
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="postImage">Post Image:</label>
+        <input 
+          type="file"  
+          id="postImage"
+          onChange={handleImageChange}
+        />
+      </div>
+      <div>
+        <label htmlFor="category">Category:</label>
+        <select
+          id="category"
+          name="category"
+          value={category}  
+          onChange={(e) => setCategory(e.target.value)}  
+          required
+        >
+          <option value="">Select Category</option>
+          <option value="gallery">Gallery</option>
+          <option value="searchandfind">Search & Find</option>
+          <option value="recommendation">Recommendation</option>
+        </select>
+      </div>
+      <button type="submit" className="btn">Create Post</button>
+      {success && <p className="success-message">{success}</p>}
+      {error && <p className="error-message">{error}</p>}
+    </form>
   );
 };
 

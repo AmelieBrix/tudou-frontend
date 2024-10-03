@@ -1,84 +1,26 @@
-/*import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";  
+import PostList from '../components/Postlist/Postlist';  // Import the reusable PostList component
+import '../css/CategoryPage.css'
 
 const GalleryPage = () => {
-  const [posts, setPosts] = useState([]);  
-  const [loading, setLoading] = useState(true);  
-  const [error, setError] = useState(null); 
-
-  useEffect(() => {
-    axios.get(`${API_URL}/posts?category=gallery`)  
-      .then(response => {
-        console.log('this is the response data',response.data)
-        setPosts(response.data); 
-        setLoading(false);  
-      })
-      .catch(err => {
-        console.log(err)
-        setError('Failed to fetch posts');
-        setLoading(false);  
-      });
-  }, []);
-
-
-  if (loading) return <p>Loading posts...</p>;
-  if (error) return ( <div>{
-    <Link to="/createpost/gallery">
-    <button>Create New Post</button>
-  </Link>}</div>)
-
   return (
-    <div>
-      <h1>Gallery Posts</h1>
-
- 
-      {posts.length > 0 ? (
-        <ul>
-          {posts.map(post => (
-            <li key={post._id}>
-              <h2>{post.title}</h2>
-              <p>{post.content.slice(0, 100)}...</p> 
-
-              <p>
-                Author: {post.author ? post.author.username : 'Unknown'}
-              </p>
-
-       
-              <Link to={`/gallery/${post._id}`}>Read More</Link>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No posts found in the gallery.</p>
-      )}
-
-      <Link to="/createpost/gallery">
-        <button>Create New Post</button>
-      </Link>
+    <div className="category-page">
+    {/* Large image header with text overlay */}
+    <div className="category-header">
+      <img src="https://res.cloudinary.com/dfrhg0iqs/image/upload/v1727947817/tsjgffu4wabcrcdqcwzx.png" alt="Gallery Header" className="header-image" />
+      <div className="header-content">
+        <Link to="/createpost/gallery">
+          <button className="fancy-button">Create New Post</button>
+        </Link>
+      </div>
     </div>
-  );
-};
-*/
-import { Link } from 'react-router-dom';
-import PostList from '../components/Postlist';  // Import the reusable PostList component
 
-const GalleryPage = () => {
-  return (
-    <div>
-      <h1>Gallery</h1>
-      
-      {/* Reuse the PostList component, passing the "gallery" category */}
+    {/* Post List */}
+    <div className="post-list-container">
       <PostList category="gallery" />
-      
-      {/* Create new post button */}
-      <Link to="/createpost/gallery">
-        <button>Create New Post</button>
-      </Link>
     </div>
-  );
+  </div>
+);
 };
 
 

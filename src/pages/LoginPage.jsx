@@ -1,9 +1,9 @@
-// src/pages/LoginPage.jsx
- 
 import { useContext, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";  // We will use `useNavigate` to redirect after login.
 import { AuthContext } from "../context/auth.context";
+import { Form, Button, Container, Alert } from "react-bootstrap";  
+import "../css/Login.css";
  
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";  
  
@@ -23,27 +23,15 @@ function LoginPage(props) {
   // This function will handle form submission for login
   const handleLoginSubmit = (e) => {
     e.preventDefault(); 
-    
-    // Prepare request body with email and password
-    const requestBody = { email, password };
-    console.log("THIS IS THE import.meta.env.whateverrrrr");
-    console.log(import.meta.env.VITE_API_URL);
-    console.log('this is the api url',API_URL);
- 
-    // Send POST request to login API endpoint
-    axios.post(`${API_URL}/auth/login`, requestBody)
+        const requestBody = { email, password };
+
+     axios.post(`${API_URL}/auth/login`, requestBody)
       .then((response) => {
-        // On success, response will contain the JWT token
-        console.log('JWT token:', response.data.authToken); 
-
         storeToken(response.data.authToken); 
-
         authenticateUser();
-
         navigate('/');                             
       })
       .catch((error) => {
-        // Handle errors 
         const errorDescription = error.response?.data?.message || "Login failed. Please try again.";
         setErrorMessage(errorDescription);
       });
@@ -51,37 +39,47 @@ function LoginPage(props) {
   
   // The component renders the form with email and password inputs and handles form submission
   return (
-    <div className="LoginPage">
-      <h1>Login</h1>
+    <Container className="signup-page">  {/* Reusing the same container class */}
+    <div className="form-card">
+      <h2>Login</h2>
+      <Form onSubmit={handleLoginSubmit}>
+        <Form.Group className="mb-3">
+          <Form.Label>Email</Form.Label>
+          <Form.Control 
+            type="email" 
+            value={email} 
+            onChange={handleEmail} 
+            placeholder="Enter your email" 
+            required
+          />
+        </Form.Group>
 
-      {/* The login form */}
-      <form onSubmit={handleLoginSubmit}>
-        <label>Email:</label>
-        <input 
-          type="email"
-          name="email"
-          value={email}
-          onChange={handleEmail}
-        />
+        <Form.Group className="mb-3">
+          <Form.Label>Password</Form.Label>
+          <Form.Control 
+            type="password" 
+            value={password} 
+            onChange={handlePassword} 
+            placeholder="Enter your password" 
+            required
+          />
+        </Form.Group>
 
-        <label>Password:</label>
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={handlePassword}
-        />
+        {errorMessage && (
+          <Alert variant="danger" className="mt-3">
+            {errorMessage}
+          </Alert>
+        )}
 
-        <button type="submit">Login</button>
-      </form>
+        <Button variant="primary" type="submit" className="btn-block">
+          Login
+        </Button>
+      </Form>
 
-      {/* Show error messages if login fails */}
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
-
-      <p>Don't have an account yet?</p>
-      <Link to={"/signup"}> Sign Up</Link>
+      <p className="mt-3">Don't have an account yet? <Link to="/signup">Sign Up</Link></p>
     </div>
-  );
-};
+  </Container>
+);
+}
 
 export default LoginPage;

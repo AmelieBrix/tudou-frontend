@@ -1,0 +1,41 @@
+button {
+    background-color: var(--primary-color); 
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.6rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: var(--primary-color-hover); 
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .button-small {
+    font-size: 1.4rem;
+    padding: 0.8rem 1.6rem;
+  }
+  
+  .button-large {
+    font-size: 2rem;
+    padding: 1.2rem 2.4rem;
+  }
+  
+  .button-outline {
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+  }
+  
+  .button-outline:hover {
+    background-color: var(--primary-color);
+    color: white;
+  }
+  

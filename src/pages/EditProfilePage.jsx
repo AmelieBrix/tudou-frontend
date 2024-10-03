@@ -3,28 +3,20 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../context/auth.context';
 import DeleteUser from '../components/DeleteUser';
+import '../css/EditProfilePage.css';  
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
 
 const EditProfilePage = () => {
-  const { user, getToken } = useContext(AuthContext); // Get user and token
-  const [profile, setProfile] = useState({ first_Name: '', last_Name: '', username: '', email: '', profilePicture: '', imageUrl: '', currentPassword: '', newPassword: '' });
-  const [profilePicture, setProfilePicture] = useState(null); // For file upload
+  const { user, getToken } = useContext(AuthContext);
+  const [profile, setProfile] = useState({ first_Name: '', last_Name: '', username: '', email: '', profilePicture: '', currentPassword: '', newPassword: '' });
+  const [profilePicture, setProfilePicture] = useState(null); 
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const token = getToken();
 
-  console.log("here is the user");
-  console.log(user.first_Name);
-  console.log(" here is the user.id");
-  console.log(user.id);
-  console.log("this is user._id");
-  console.log(user._id);
-
   useEffect(() => {
     if (user) {
-      console.log('right here--> ', user.first_Name);
-      // Load current user data into the form
       setProfile({
         first_Name: user.first_Name || '',
         last_Name: user.last_Name || '',
@@ -46,40 +38,25 @@ const EditProfilePage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log('Auth profile check:', profile);
-    console.log('User ID:', user._id);
-
     const formData = new FormData();
     formData.append('first_Name', profile.first_Name);
     formData.append('last_Name', profile.last_Name);
     formData.append('username', profile.username);
     formData.append('email', profile.email);
 
-    // Add current and new passwords if they're set
     if (profile.currentPassword) formData.append('currentPassword', profile.currentPassword);
     if (profile.newPassword) formData.append('newPassword', profile.newPassword);
-
-    // If a new profile picture is uploaded, append it
     if (profilePicture) {
-      formData.append('profilePicture', profilePicture); // Append the uploaded file
-    } else {
-      formData.append('profilePicture', profile.profilePicture); // Use existing URL if no file is uploaded
+      formData.append('profilePicture', profilePicture);
     }
-
 
     axios.put(`${API_URL}/users/${user._id}/edit`, formData, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {
-        console.log('Profile updated:', response.data);
-
-        // If a new token is returned, store it
         if (response.data.authToken) {
-          // Replace the old token with the new one
           localStorage.setItem('authToken', response.data.authToken);
         }
-
-        // Redirect to the user's profile page
         navigate(`/profile/${user._id}`);
       })
       .catch(err => {
@@ -89,10 +66,10 @@ const EditProfilePage = () => {
   };
 
   return (
-    <div>
+    <div className="edit-profile-container">
       <h1>Edit Profile</h1>
-      {error && <p>{error}</p>}
-      <form onSubmit={handleSubmit}>
+      {error && <p className="error-message">{error}</p>}
+      <form onSubmit={handleSubmit} className="edit-profile-form">
 
         <label>First Name</label>
         <input type="text" name="first_Name" value={profile.first_Name || ''} onChange={handleChange} />
@@ -115,15 +92,10 @@ const EditProfilePage = () => {
         <label>Profile Picture</label>
         <input type="file" name="profilePicture" onChange={(e) => setProfilePicture(e.target.files[0])} />
 
-
-        <button type="submit">Update Profile</button>
+        <button type="submit" className="btn">Update Profile</button>
       </form>
 
       <DeleteUser userId={user._id} />
-
-
-
-
     </div>
   );
 };

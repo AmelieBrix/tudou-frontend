@@ -3,13 +3,23 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/auth.context";
 import { Navigate } from "react-router-dom";
+import Spinner from './Spinner/Spinner';
+
 
 function IsPrivate( { children } ) {
   
   const { isLoggedIn, isLoading } = useContext(AuthContext);
 
   // If the authentication is still loading 
-  if (isLoading) return <div className="loading-spinner">Loading...</div>; // Replace with your spinner
+  if (isLoading) {
+    return (
+      <>
+        <Spinner />
+        <p>Loading...</p>
+      </>
+    );
+  }
+
 
 
   if (!isLoggedIn) {

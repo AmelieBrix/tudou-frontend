@@ -1,34 +1,38 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import PostDetails from '../components/PostDetail';
+import PostDetails from '../components/PostDetail/PostDetail';
+import Spinner from '../components/Spinner/Spinner';
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";  
-
-
 
 const PostDetailPage = () => {
   const { postId } = useParams();  
   const [post, setPost] = useState(null);    
   const [comment, setComment] = useState(''); 
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`${API_URL}/posts/${postId}`)
-      .then(response => {
-        console.log(response.data)
-        setPost(response.data);   
-      }) 
-      .catch(err => {
-        setError('Error fetching post details');
-      });
+    setLoading(true); // Start loading
+    
+    setTimeout(() => {
+      axios.get(`${API_URL}/posts/${postId}`)
+        .then(response => {
+          console.log(response.data);
+          setPost(response.data);   
+          setLoading(false); 
+        }) 
+        .catch(err => {
+          setError('Error fetching post details');
+          setLoading(false); 
+        });
+    }, 2000); 
   }, [postId]);
 
-  // Function to handle adding a new comment
-
   const handleDelete = () => {
-    const token = localStorage.getItem('authToken');  // Assuming the authToken is stored in localStorage
+    const token = localStorage.getItem('authToken');  
 
     axios.delete(`${API_URL}/posts/${postId}/delete`, {
       headers: {
@@ -53,7 +57,6 @@ const PostDetailPage = () => {
       }
     })
     .then(() => {
-      // After successful deletion, remove the comment from the post state
       setPost(prevPost => ({
         ...prevPost,
         comments: prevPost.comments.filter(comment => comment._id !== commentId)
@@ -87,20 +90,39 @@ const PostDetailPage = () => {
 };
 
   const handleLike = () => {
-    axios.post(`${API_URL}/posts/${postId}/like`)
+    const token = localStorage.getItem('authToken');
+    axios.post(`${API_URL}/posts/${postId}/like`, {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
       .then(response => {
-        setPost(response.data);  // Update post with new like
+        console.log('this is the response',response)
+        setPost(response.data);  
       })
       .catch(err => setError('Error liking the post'));
   };
 
-  if (!post) return <p>Loading post details...</p>;
+  if (loading) {
+    return (
+      <>
+        <Spinner />
+        <p>Loading post data...</p>
+      </>
+    );
+  }
+
+  if (!loading && !post) {
+    return <p>There are no posts, be the first to post something!</p>;
+  }
+
+  
 
   return (
     <div>
       {error && <p>{error}</p>}
       
-      {/* Use the PostDetails component */}
       <PostDetails 
         post={post} 
         handleLike={handleLike} 
@@ -115,7 +137,3 @@ const PostDetailPage = () => {
 };
 
 export default PostDetailPage;
-
-
-//handleDelete={handleDelete}  
-        //handleEdit={handleEdit} 

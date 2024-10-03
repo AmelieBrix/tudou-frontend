@@ -1,7 +1,10 @@
 import { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import { AuthContext } from '../context/auth.context';
+import { AuthContext } from '../../context/auth.context';
 import { Link } from 'react-router-dom';
+import Spinner from '../Spinner/Spinner';
+import "./Postlist.css"
+
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
 
@@ -17,7 +20,7 @@ const PostList = ({ category, authorId }) => {
     let url; 
     if (authorId) {
       url = `${API_URL}/posts/author/${authorId}`; 
-      console.log('Fetching posts from author:', url); // Future enhancement for querying by authorId
+      console.log('Fetching posts from author:', url); 
     } else if (category) {
       url = `${API_URL}/posts?category=${category}`;
       console.log('Fetching posts from category:', url);
@@ -43,39 +46,58 @@ const PostList = ({ category, authorId }) => {
       });
   }, [category, authorId, token]);
 
-  if (loading) return <p>Loading posts...</p>;
+
+  if (loading) {
+    return (
+      <>
+        <Spinner />
+        <p>Loading...</p>
+      </>
+    );
+  }
+  
   if (error) {
     return <div>{error}</div>;
   }
   // <p>Author: {post.author ? post.author.username : 'Unknown'}</p> 
   // 
   return (
-    <div>
-      <h1>{category ? `${category.charAt(0).toUpperCase() + category.slice(1)} Posts` : 'User Posts'}</h1>
-      <ul>
+    <div className="post-list-container">
+      <ul className="post-list">
         {posts.length > 0 ? (
           posts.map(post => (
-            <li key={post._id}>
-              <h2>{post.title}</h2>
+            <li key={post._id} className="post-card">
+              <div className="post-header">
+                <div className="author-info">
+                  {post.author && post.author.profilePicture && (
+                    <img
+                      src={post.author.profilePicture}
+                      alt={post.author.username}
+                      className="author-picture"
+                    />
+                  )}
+                  <div className="author-name">
+                    <Link to={`/profile/${post.author._id}`}>
+                      {post.author ? post.author.username : 'Unknown'}
+                    </Link>
+                  </div>
+                </div>
+                <h2 className="post-title">
+                  <Link to={`/posts/${post._id}`}>{post.title}</Link>
+                </h2>
+              </div>
               {post.imageUrl && (
-                <img src={post.imageUrl} alt={post.title} style={{ width: '200px', height: 'auto' }} />
+                <img src={post.imageUrl} alt={post.title} className="post-image" />
               )}
-              <p>{post.content.slice(0, 100)}...</p>
-              <p>
-                Author: {post.author ? (
-                  <Link to={`/profile/${post.author._id}`}>{post.author.username}</Link>
-                ) : (
-                  'Unknown'
-                )}
-              </p>
-              <Link to={`/posts/${post._id}`}>Read More</Link>
+              <p className="post-content">{post.content.slice(0, 100)}...</p>
             </li>
           ))
         ) : (
-          <p>No posts found yet. Let the others know what you want to do </p>
+          <p>No posts found yet. Let others know what you want to do.</p>
         )}
       </ul>
     </div>
   );
 };
+
 export default PostList;

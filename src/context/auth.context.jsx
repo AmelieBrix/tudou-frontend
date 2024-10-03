@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";   // import.meta.env
@@ -9,6 +10,7 @@ function AuthProviderWrapper(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(null);
   
+  const navigate = useNavigate();
     // Store the token in localStorage
     const storeToken = (token) => {
         localStorage.setItem('authToken', token);
@@ -36,6 +38,7 @@ function AuthProviderWrapper(props) {
           })
           .catch((error) => {
             console.error("Token verification failed:", error);
+            navigate(`/error`); 
             setUser(null);  
             setIsLoggedIn(false);    // User is not logged in
             setIsLoading(false);

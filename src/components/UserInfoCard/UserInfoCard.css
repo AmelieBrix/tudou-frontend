@@ -1,0 +1,97 @@
+/* Profile Page Container */
+.profile-page-container {
+    padding: 4rem;
+    background-color: beige;
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 90px;
+  }
+  
+  /* Heading Styles */
+  .profile-page-heading {
+    font-size: 3.5rem;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+  }
+  
+  /* Profile Actions (buttons like view posts, edit profile, chat) */
+  .profile-actions {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  
+  .btn {
+    padding: 1rem 2rem;
+    background-color: #00a984;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .btn:hover {
+    background-color: #008d6b;
+  }
+  
+  .profile-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4rem;
+  }
+  
+  /* User Info Card Styles */
+  .user-info-card {
+    background-color: #00a984;
+    color: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  /* User Info Card Header */
+  .user-info-card__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Profile Picture */
+  .user-info-card__image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* User Details */
+  .user-info-card__details h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .user-info-card__details p {
+    font-size: 1.6rem;
+  }
+  
+  /* Spinner for user info */
+  .user-info-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+  }
+  
+
+  @media (min-width: 769px) {
+
+  }
