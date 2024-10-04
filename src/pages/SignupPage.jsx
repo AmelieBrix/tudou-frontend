@@ -69,7 +69,6 @@ function SignupPage(props) {
                 // Handle any errors and set error message in state
                 const errorDescription = error.response?.data?.message || "Something went wrong. Please try again.";
                 setErrorMessage(errorDescription);
-                navigate(`/error`);
             });
     };
 

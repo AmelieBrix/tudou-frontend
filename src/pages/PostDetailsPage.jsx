@@ -102,8 +102,10 @@ const PostDetailPage = () => {
         }
       })
       .then(response => {
-        console.log('this is the response',response)
+        console.log('this is the response',response);
+        console.log('this is the response.data', response.data);
         setPost(response.data);  
+        console.log('poto pelado')
       })
       .catch(err => setError('Error liking the post'));
   };
