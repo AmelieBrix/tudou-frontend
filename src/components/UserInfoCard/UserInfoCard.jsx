@@ -4,6 +4,8 @@ import { AuthContext } from '../../context/auth.context';
 import { useParams } from 'react-router-dom';  
 import Spinner from '../Spinner/Spinner';
 import './UserInfoCard.css';
+import { useTranslation } from "react-i18next";
+
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005"; 
 
@@ -16,6 +18,7 @@ const UserInfoCard = ({setAuthorId, setUsername}) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { getToken } = useContext(AuthContext);  
+  const { t } = useTranslation();
 
   useEffect(() => {
     const token = getToken();  
@@ -49,7 +52,7 @@ const UserInfoCard = ({setAuthorId, setUsername}) => {
     return (
       <div className="user-info-spinner">
         <Spinner />
-        <p>Loading user info...</p>
+        <p>{t('Loading')}</p>
       </div>
     );
   }

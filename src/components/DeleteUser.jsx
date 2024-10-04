@@ -2,6 +2,8 @@ import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../context/auth.context';
+import { useTranslation } from "react-i18next";
+
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
 
@@ -10,9 +12,11 @@ const DeleteUser = ({ userId }) => {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     const token = getToken();
+    const { t } = useTranslation();
+
 
     const handleDelete = () => {
-      if (window.confirm("Are you sure you want to delete your account? This action is irreversible.")) {
+      if (window.confirm(t('DeleteQuestion'))) {
         
         if (!user || !token) {
           setError("You must be logged in to delete the account.");
@@ -42,7 +46,7 @@ const DeleteUser = ({ userId }) => {
     return (
       <div>
         {error && <p>{error}</p>}
-        <button onClick={handleDelete}>Delete User</button>
+        <button onClick={handleDelete}>{t('DeleteUser')}</button>
       </div>
     );
 };

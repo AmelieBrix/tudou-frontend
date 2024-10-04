@@ -3,6 +3,8 @@ import axios from 'axios';
 import { AuthContext } from '../context/auth.context';
 import { useParams } from 'react-router-dom';  
 import "../css/CreatePost.css";
+import { useTranslation } from "react-i18next";
+
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
 
@@ -14,6 +16,7 @@ const CreatePost = () => {
   const [category, setCategory] = useState(routeCategory || ''); 
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const { t } = useTranslation();
 
   const { getToken } = useContext(AuthContext);  // Get the token from AuthContext
 
@@ -59,7 +62,7 @@ const CreatePost = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label htmlFor="title">Title:</label>
+        <label htmlFor="title">{t('Title')}:</label>
         <input 
           type="text" 
           id="title"
@@ -69,7 +72,7 @@ const CreatePost = () => {
         />
       </div>
       <div>
-        <label htmlFor="content">Content:</label>
+        <label htmlFor="content">{t('Content')}:</label>
         <textarea 
           id="content"
           value={content} 
@@ -78,7 +81,7 @@ const CreatePost = () => {
         />
       </div>
       <div>
-        <label htmlFor="postImage">Post Image:</label>
+        <label htmlFor="postImage">{t('PostImage')}</label>
         <input 
           type="file"  
           id="postImage"
@@ -86,7 +89,7 @@ const CreatePost = () => {
         />
       </div>
       <div>
-        <label htmlFor="category">Category:</label>
+        <label htmlFor="category">{t('Category')}:</label>
         <select
           id="category"
           name="category"
@@ -94,13 +97,13 @@ const CreatePost = () => {
           onChange={(e) => setCategory(e.target.value)}  
           required
         >
-          <option value="">Select Category</option>
-          <option value="gallery">Gallery</option>
-          <option value="searchandfind">Search & Find</option>
-          <option value="recommendation">Recommendation</option>
+          <option value="">{t('SelectCategory')}</option>
+          <option value="gallery">{t('Gallery')}</option>
+          <option value="searchandfind">{t('SearchAndFind')}</option>
+          <option value="recommendation">{t('Recommendation')}</option>
         </select>
       </div>
-      <button type="submit" className="btn">Create Post</button>
+      <button type="submit" className="btn">{t('CreateNewPost')}</button>
       {success && <p className="success-message">{success}</p>}
       {error && <p className="error-message">{error}</p>}
     </form>

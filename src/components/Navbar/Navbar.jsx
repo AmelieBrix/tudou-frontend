@@ -1,4 +1,5 @@
 import { useContext, useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";  
 import LanguageSwitcher from "../LanguageSwitcher";
@@ -7,6 +8,8 @@ import "./Navbar.style.css"
 function Navbar() {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);  
   const [isMenuOpen, setIsMenuOpen] = useState(false);  
+  const { t } = useTranslation();
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -30,13 +33,13 @@ function Navbar() {
         <>
           <div className="navbar-center">
             <Link to="/Gallery">
-              <button className="nav-button">Gallery</button>
+              <button className="nav-button">{t('Gallery')}</button>
             </Link>
             <Link to="/recommendations">
-              <button className="nav-button">Recommendation</button>
+              <button className="nav-button">{t('Recommendation')}</button>
             </Link>
             <Link to="/searchandfind">
-              <button className="nav-button">Search and Find</button>
+              <button className="nav-button">{t('SearchAndFind')}</button>
             </Link>
           </div>
 
@@ -55,17 +58,17 @@ function Navbar() {
                 </div>
                 <div className="navbar-center-mobile">
                   <Link to="/Gallery">
-                    <button className="nav-button">Gallery</button> </Link>
+                    <button className="nav-button">{t('Gallery')}</button> </Link>
                   <Link to="/recommendations">
-                    <button className="nav-button">Recommendation</button></Link>
+                    <button className="nav-button">{t('Recommendation')}</button></Link>
                   <Link to="/searchandfind">
-                    <button className="nav-button">Search and Find</button></Link>
+                    <button className="nav-button">{t('SearchAndFind')}</button></Link>
                 </div>
                 <div className="navbar-profile-logout" >
                   <Link to={`/profile/${user._id}`}>
-                    <button className="nav-button" onClick={() => setIsMenuOpen(false)}>My Profile</button>
+                    <button className="nav-button" onClick={() => setIsMenuOpen(false)}>{t('MyProfile')}</button>
                   </Link>
-                  <button className="navbar-logout" onClick={() => { logOutUser(); setIsMenuOpen(false); }}>Logout</button>
+                  <button className="navbar-logout" onClick={() => { logOutUser(); setIsMenuOpen(false); }}>{t('Logout')}</button>
                 </div>
               </div>
             )}
@@ -73,8 +76,8 @@ function Navbar() {
         </>
       ) : (
         <div className="navbar-right">
-          <Link to="/signup"><button className="nav-button">Sign Up</button></Link>
-          <Link to="/login"><button className="nav-button">Login</button></Link>
+          <Link to="/signup"><button className="nav-button">{t('Signup')}</button></Link>
+          <Link to="/login"><button className="nav-button">{t('Login')}</button></Link>
         </div>
       )}
     </nav>

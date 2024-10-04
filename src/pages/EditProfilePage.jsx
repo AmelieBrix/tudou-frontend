@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../context/auth.context';
 import DeleteUser from '../components/DeleteUser';
-import '../css/EditProfilePage.css';  
+import '../css/EditProfilePage.css';
+import { useTranslation } from "react-i18next";
+  
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
 
@@ -14,6 +16,8 @@ const EditProfilePage = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const token = getToken();
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (user) {
@@ -67,32 +71,32 @@ const EditProfilePage = () => {
 
   return (
     <div className="edit-profile-container">
-      <h1>Edit Profile</h1>
+      <h1>{t('EditProfile')}</h1>
       {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleSubmit} className="edit-profile-form">
 
-        <label>First Name</label>
+        <label>{t('FirstName')}</label>
         <input type="text" name="first_Name" value={profile.first_Name || ''} onChange={handleChange} />
 
-        <label>Last Name</label>
+        <label>{t('LastName')}</label>
         <input type="text" name="last_Name" value={profile.last_Name || ''} onChange={handleChange} />
 
-        <label>Username</label>
+        <label>{t('Username')}</label>
         <input type="text" name="username" value={profile.username || ''} onChange={handleChange} required />
 
-        <label>Email</label>
+        <label>{t('Email')}</label>
         <input type="email" name="email" value={profile.email || ''} onChange={handleChange} required />
 
-        <label>Current Password</label>
+        <label>{t('CurrentPassword')}</label>
         <input type="password" name="currentPassword" onChange={handleChange} value={profile.currentPassword} placeholder="Enter current password" />
 
-        <label>New Password</label>
+        <label>{t('NewPassword')}</label>
         <input type="text" name="newPassword" onChange={handleChange} value={profile.newPassword} placeholder="Enter new password" />
 
-        <label>Profile Picture</label>
+        <label>{t('ProfilePicture')}</label>
         <input type="file" name="profilePicture" onChange={(e) => setProfilePicture(e.target.files[0])} />
 
-        <button type="submit" className="btn">Update Profile</button>
+        <button type="submit" className="btn">{t('Update Profile')}</button>
       </form>
 
       <DeleteUser userId={user._id} />

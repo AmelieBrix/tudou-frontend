@@ -4,6 +4,7 @@ import { AuthContext } from '../../context/auth.context';
 import { Link } from 'react-router-dom';
 import Spinner from '../Spinner/Spinner';
 import "./Postlist.css"
+import { useTranslation } from "react-i18next";
 
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
@@ -14,6 +15,7 @@ const PostList = ({ category, authorId }) => {
   const [error, setError] = useState(null);
   const { getToken } = useContext(AuthContext);
   const token = getToken();
+  const { t } = useTranslation();
 
 
   useEffect(() => {
@@ -51,7 +53,7 @@ const PostList = ({ category, authorId }) => {
     return (
       <>
         <Spinner />
-        <p>Loading...</p>
+        <p>{t('Loading')}</p>
       </>
     );
   }
@@ -93,7 +95,7 @@ const PostList = ({ category, authorId }) => {
             </li>
           ))
         ) : (
-          <p>No posts found yet. Let others know what you want to do.</p>
+          <p>{t('NoPostData')}</p>
         )}
       </ul>
     </div>

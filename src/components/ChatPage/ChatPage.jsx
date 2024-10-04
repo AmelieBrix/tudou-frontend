@@ -5,6 +5,8 @@ import io from 'socket.io-client';
 import { useParams } from 'react-router-dom';
 import Spinner from '../Spinner/Spinner';
 import "./ChatPage.css";
+import { useTranslation } from "react-i18next";
+
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5005';
 let socket = '';
@@ -17,6 +19,8 @@ const ChatPage = () => {
   const [currentMessage, setCurrentMessage] = useState('');
   const [chatPartner, setChatPartner] = useState('');
   const messagesEndRef = useRef(null); 
+  const { t } = useTranslation();
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -76,14 +80,14 @@ const ChatPage = () => {
     return (
       <>
         <Spinner />
-        <p>Loading all messages...</p>
+        <p>{t('Loading')}</p>
       </>
     );
   }
 
   return (
     <div className="chat-page">
-      <h3>You're in the Chat Page</h3>
+      <h3>{t('ChatPage')}</h3>
       <div className="chat-container">
         <div className="messages">
           {messageList.map((val, index) => (
@@ -104,7 +108,7 @@ const ChatPage = () => {
             onChange={handleMessageInput}
             className="message-input"
           />
-          <button onClick={sendMessage} className="send-button">Send</button>
+          <button onClick={sendMessage} className="send-button">{t('Send')}</button>
         </div>
       </div>
     </div>

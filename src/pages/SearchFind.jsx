@@ -1,8 +1,12 @@
 import { Link } from 'react-router-dom';
 import PostList from '../components/Postlist/Postlist';  // Import the reusable PostList component
 import "../css/CategoryPage.css";
+import { useTranslation } from "react-i18next";
+
 
 const SearchAndFindPage = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="category-page">
       {/* Large image header with text overlay */}
@@ -10,7 +14,7 @@ const SearchAndFindPage = () => {
         <img src="https://res.cloudinary.com/dfrhg0iqs/image/upload/v1727953074/tzhiwgabgrvl1qidlijq.png" alt="Search and Find Header" className="header-image" />
         <div className="header-content">
           <Link to="/createpost/searchandfind">
-            <button className="fancy-button">Create New Post</button>
+            <button className="fancy-button">{t('CreateNewPost')}</button>
           </Link>
         </div>
       </div>

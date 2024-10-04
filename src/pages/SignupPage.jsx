@@ -3,19 +3,23 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Form, Button, Container, Alert } from "react-bootstrap";  
-import '../css/Signup.css'
+import '../css/Signup.css';
+import { useTranslation } from "react-i18next";
+
 
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5005';
 
 function SignupPage(props) {
 
-    const [firstName, setFirstName] = useState("");  // Added first name state
+    const [firstName, setFirstName] = useState("");  
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [username, setName] = useState("");
     const [password, setPassword] = useState("");
     const [profilePicture, setProfilePicture] = useState(null);
+
+    const { t } = useTranslation();
 
     const [errorMessage, setErrorMessage] = useState(undefined);
 
@@ -72,65 +76,65 @@ function SignupPage(props) {
     return (
         <Container className="signup-page">
             <div className="form-card">
-                <h2>Sign Up</h2>
+                <h2>{t('Signup')}</h2>
                 <Form onSubmit={handleSignupSubmit}>
                     <Form.Group className="mb-3">
-                        <Form.Label>First Name</Form.Label>
+                        <Form.Label>{t('FirstName')}</Form.Label>
                         <Form.Control 
                             type="text" 
                             value={firstName} 
                             onChange={handleFirstName} 
-                            placeholder="Enter first name" 
+                            placeholder={t('FirstName')}
                             required 
                         />
                     </Form.Group>
 
                     <Form.Group className="mb-3">
-                        <Form.Label>Last Name</Form.Label>
+                        <Form.Label>{t('LastName')}</Form.Label>
                         <Form.Control 
                             type="text" 
                             value={lastName} 
                             onChange={handleLastName} 
-                            placeholder="Enter last name" 
+                            placeholder={t('LastName')}
                             required 
                         />
                     </Form.Group>
 
                     <Form.Group className="mb-3">
-                        <Form.Label>Username</Form.Label>
+                        <Form.Label>{t('Username')}</Form.Label>
                         <Form.Control 
                             type="text" 
                             value={username} 
                             onChange={handleUsername} 
-                            placeholder="Enter username" 
+                            placeholder={t('Username')}
                             required 
                         />
                     </Form.Group>
 
                     <Form.Group className="mb-3">
-                        <Form.Label>Email</Form.Label>
+                        <Form.Label>{t('Email')}</Form.Label>
                         <Form.Control 
                             type="email" 
                             value={email} 
                             onChange={handleEmail} 
-                            placeholder="Enter email" 
+                            placeholder={t('Email')}
                             required 
                         />
                     </Form.Group>
 
                     <Form.Group className="mb-3">
-                        <Form.Label>Password</Form.Label>
+                        <Form.Label>{t('Password')}</Form.Label>
                         <Form.Control 
                             type="password" 
                             value={password} 
                             onChange={handlePassword} 
-                            placeholder="Enter password" 
+                            placeholder={t('Password')}
                             required 
                         />
                     </Form.Group>
 
                     <Form.Group className="mb-3">
-                        <Form.Label>Profile Picture</Form.Label>
+                        <Form.Label>{t('ProfilePicture')}</Form.Label>
                         <Form.Control 
                             type="file" 
                             onChange={handleProfilePictureChange} 
@@ -144,11 +148,11 @@ function SignupPage(props) {
                     )}
 
                     <Button variant="primary" type="submit" className="btn-block">
-                        Sign Up
+                    {t('Signup')}
                     </Button>
                 </Form>
 
-                <p className="mt-3">Already have an account? <Link to="/login">Login</Link></p>
+                <p className="mt-3">{t('AlreadyAccount')} <Link to="/login">{t('Login')}</Link></p>
             </div>
         </Container>
     );

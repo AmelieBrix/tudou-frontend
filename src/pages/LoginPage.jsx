@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";  // We will use `useNaviga
 import { AuthContext } from "../context/auth.context";
 import { Form, Button, Container, Alert } from "react-bootstrap";  
 import "../css/Login.css";
+import { useTranslation } from "react-i18next";
+
  
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";  
  
@@ -11,7 +13,9 @@ function LoginPage(props) {
   const [email, setEmail] = useState("");  // For email input
   const [password, setPassword] = useState("");  // For password input
   const [errorMessage, setErrorMessage] = useState(undefined);  // For displaying errors
-  
+  const { t } = useTranslation();
+
+
   const navigate = useNavigate();  // Hook to navigate to other pages.
  
   const { storeToken, authenticateUser } = useContext(AuthContext)
@@ -41,26 +45,26 @@ function LoginPage(props) {
   return (
     <Container className="signup-page">  {/* Reusing the same container class */}
     <div className="form-card">
-      <h2>Login</h2>
+      <h2>{t('Login')}</h2>
       <Form onSubmit={handleLoginSubmit}>
         <Form.Group className="mb-3">
-          <Form.Label>Email</Form.Label>
+          <Form.Label>{t('Email')}</Form.Label>
           <Form.Control 
             type="email" 
             value={email} 
             onChange={handleEmail} 
-            placeholder="Enter your email" 
+            placeholder={t('Email')}
             required
           />
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label>Password</Form.Label>
+          <Form.Label>{t('Password')}</Form.Label>
           <Form.Control 
             type="password" 
             value={password} 
             onChange={handlePassword} 
-            placeholder="Enter your password" 
+            placeholder={t('Password')}
             required
           />
         </Form.Group>
@@ -72,11 +76,11 @@ function LoginPage(props) {
         )}
 
         <Button variant="primary" type="submit" className="btn-block">
-          Login
+        {t('Login')}
         </Button>
       </Form>
 
-      <button className="mt-3">Don't have an account yet? <Link to="/signup">Sign Up</Link></button>
+      <button className="mt-3">{t('NoAccount')}<Link to="/signup">{t('Signup')}</Link></button>
     </div>
   </Container>
 );

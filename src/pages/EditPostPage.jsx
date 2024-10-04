@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Spinner from '../components/Spinner/Spinner';
 import "../css/EditPost.css";
+import { useTranslation } from "react-i18next";
+
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";  // Adjust as per your setup
 const DEFAULT_IMAGE_URL = 'https://console.cloudinary.com/console/c-511bcbc8f3c7007e75765c1b668116/media_library/search/asset/07761bdaff339e4c2fcc9229597770f7/manage?q=&view_mode=mosaic&context=manage';
@@ -15,6 +17,8 @@ const PostEditPage = () => {
     const [loading, setLoading] = useState(true);
     const [postImage, setPostImage] = useState(null);  
     const navigate = useNavigate(); 
+
+    const { t } = useTranslation();
 
     useEffect(() => {
         axios.get(`${API_URL}/posts/${postId}`)
@@ -72,7 +76,7 @@ const PostEditPage = () => {
         return (
           <>
             <Spinner />
-            <p>Loading post data...</p>
+            <p>{t('LoadingPostData')}</p>
           </>
         );
       }
@@ -82,22 +86,22 @@ const PostEditPage = () => {
         <div className="form-container">
             <div className="form-card">
                 {error && <p className="error-message">{error}</p>}
-                <h2>Edit Post</h2>
+                <h2>{t('EditPost')}</h2>
 
                 <form onSubmit={handleSubmit}>
                     <div>
-                        <label htmlFor="title">Title:</label>
+                        <label htmlFor="title">{t('Title')}</label>
                         <input
                             type="text"
                             id="title"
-                            name="title"
+                            name={t('Title')}
                             value={post.title}
                             onChange={handleChange}
                             required
                         />
                     </div>
                     <div>
-                        <label htmlFor="content">Content:</label>
+                        <label htmlFor="content">{t('Content')}</label>
                         <textarea
                             id="content"
                             name="content"
@@ -107,7 +111,7 @@ const PostEditPage = () => {
                         />
                     </div>
                     <div>
-                        <label htmlFor="category">Category:</label>
+                        <label htmlFor="category">{t('Category')}</label>
                         <select
                             id="category"
                             name="category"
@@ -115,15 +119,15 @@ const PostEditPage = () => {
                             onChange={handleChange}
                             required
                         >
-                            <option value="">Select Category</option>
-                            <option value="gallery">Gallery</option>
-                            <option value="searchandfind">Search & Find</option>
-                            <option value="recommendation">Recommendation</option>
+                            <option value="">{t('SelectCategory')}</option>
+                            <option value="gallery">{t('Gallery')}</option>
+                            <option value="searchandfind">{t('SearchAndFind')}</option>
+                            <option value="recommendation">{t('Recommendation')}</option>
                         </select>
                     </div>
 
                     <div>
-                        <h3>Current Post Image:</h3>
+                        <h3>{t('CurrentPostImage')}</h3>
                         <img
                             src={post.imageUrl || DEFAULT_IMAGE_URL}
                             alt={post.title}
@@ -132,16 +136,16 @@ const PostEditPage = () => {
                     </div>
 
                     <div>
-                        <label htmlFor="postImage">Change Post Image:</label>
+                        <label htmlFor="postImage">{t('ChangePostImage')}</label>
                         <input
                             type="file"
                             id="postImage"
-                            name="postImage"
+                            name={t('ChangePostImage')}
                             onChange={handleImageChange}
                         />
                     </div>
 
-                    <button type="submit" className="btn">Update Post</button>
+                    <button type="submit" className="btn">{t('UpdatePost')}</button>
                 </form>
             </div>
         </div>

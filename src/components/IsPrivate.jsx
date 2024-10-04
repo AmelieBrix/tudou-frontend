@@ -4,10 +4,10 @@ import { useContext } from "react";
 import { AuthContext } from "../context/auth.context";
 import { Navigate } from "react-router-dom";
 import Spinner from './Spinner/Spinner';
-
+import { useTranslation } from "react-i18next";
 
 function IsPrivate( { children } ) {
-  
+  const { t } = useTranslation();
   const { isLoggedIn, isLoading } = useContext(AuthContext);
 
   // If the authentication is still loading 
@@ -15,7 +15,7 @@ function IsPrivate( { children } ) {
     return (
       <>
         <Spinner />
-        <p>Loading...</p>
+        <p>{t('Loading')}</p>
       </>
     );
   }

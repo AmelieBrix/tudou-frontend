@@ -2,11 +2,15 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 import { useContext } from "react";
 import '../PostDetail/PostDetail.css';
+import { useTranslation } from "react-i18next";
+
 
 const DEFAULT_IMAGE_URL = 'https://res.cloudinary.com/dfrhg0iqs/image/upload/v1727615596/PostDefault_ua9vkv.png';
 
 const PostDetails = ({ post, handleLike, handleCommentSubmit, comment, setComment, handleDelete, handleDeleteComment }) => {
   const { user } = useContext(AuthContext);
+  const { t } = useTranslation();
+
 
   return (
     <div className="post-details-container">
@@ -17,7 +21,7 @@ const PostDetails = ({ post, handleLike, handleCommentSubmit, comment, setCommen
             <img src={post.author.profilePicture} alt="Profile" className="author-picture" />
           )}
           <p className="post-author">
-            By: <Link to={`/profile/${post.author._id}`}>{post.author.username}</Link>
+          {t('By')} <Link to={`/profile/${post.author._id}`}>{post.author.username}</Link>
             <span className="created-at"> | {new Date(post.createdAt).toLocaleDateString()}</span>
           </p>
         </div>
@@ -34,21 +38,21 @@ const PostDetails = ({ post, handleLike, handleCommentSubmit, comment, setCommen
       {user && user._id === post.author._id && (
         <div className="post-actions">
           <Link to={`/posts/${post._id}/edit`}>
-            <button>Edit Post</button>
+            <button>{t('EditPost')}</button>
           </Link>
-          <button onClick={handleDelete}>Delete Post</button>
+          <button onClick={handleDelete}>{t('DeletePost')}</button>
         </div>
       )}
 
       <div className="comment-section">
-        <h2>Comments</h2>
+        <h2>{t('Comments')}</h2>
         <ul className="comment-list">
           {post.comments.length > 0 ? (
             post.comments.map(comment => (
               <li key={comment._id}>
                 <p>{comment.content}</p>
                 <p>
-                  By: {comment.user ? (
+                {t('By')} {comment.user ? (
                     <Link to={`/profile/${comment.user._id}`}>{comment.user.username}</Link>
                   ) : (
                     'Unknown'
@@ -56,12 +60,12 @@ const PostDetails = ({ post, handleLike, handleCommentSubmit, comment, setCommen
                 </p>
                 {/* Conditionally render the delete button only for the comment author */}
                 {user && user._id === comment.user._id && (
-                  <button onClick={() => handleDeleteComment(comment._id)} className="delete-comment-btn">Delete Comment</button>
+                  <button onClick={() => handleDeleteComment(comment._id)} className="delete-comment-btn">{t('DeleteComment')}</button>
                 )}
               </li>
             ))
           ) : (
-            <p>No comments yet. Be the first to comment!</p>
+            <p>{t('NoComments')}</p>
           )}
         </ul>
       </div>
@@ -71,10 +75,10 @@ const PostDetails = ({ post, handleLike, handleCommentSubmit, comment, setCommen
         <textarea
           value={comment}
           onChange={(e) => setComment(e.target.value)}
-          placeholder="Add a comment"
+          placeholder={t('AddComment')}
           required
         />
-        <button type="submit">Submit Comment</button>
+        <button type="submit">{t('SubmitComment')}</button>
       </form>
     </div>
   );

@@ -64,21 +64,21 @@ const HomePage = () => {
       {/* Category divs */}
       <div className="category-section">
         <div className="category">
-          <div className="icon">🌇</div> {/* Replace with appropriate icons */}
+          <div className="icon">🌇</div> {/* A place to view amazing galleries., Explore recommendations tailored to your interests., Search and find anything you need in one place. */}
           <h3>{t('viewGallery')}</h3>
-          <p>A place to view amazing galleries.</p>
+          <p>{t('GalleryIntro')}</p>
           <Link to="/gallery" className="category-link"></Link>
         </div>
         <div className="category">
           <div className="icon">📑</div>
           <h3>{t('viewRecommendations')}</h3>
-          <p>Explore recommendations tailored to your interests.</p>
+          <p>{t('RecommendationIntro')}</p>
           <Link to="/recommendations" className="category-link"></Link>
         </div>
         <div className="category">
           <div className="icon">🔍</div>
           <h3>{t('viewSearchAndFind')}</h3>
-          <p>Search and find anything you need in one place.</p>
+          <p>{t('SearchAndFindIntro')}</p>
           <Link to="/searchandfind" className="category-link"></Link>
         </div>
       </div>

@@ -50,11 +50,13 @@ button {
   .slider-content h1 {
     font-size: 4rem;
     font-weight: bold;
+    color: white;
   }
   
   .slider-content p {
     font-size: 2rem;
     margin-bottom: 1rem;
+    color: white;
   }
   
   .category-section {

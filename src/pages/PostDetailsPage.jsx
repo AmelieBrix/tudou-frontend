@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import PostDetails from '../components/PostDetail/PostDetail';
 import Spinner from '../components/Spinner/Spinner';
+import { useTranslation } from "react-i18next";
+
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";  
 
@@ -13,6 +15,8 @@ const PostDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     setLoading(true); // Start loading
@@ -108,13 +112,13 @@ const PostDetailPage = () => {
     return (
       <>
         <Spinner />
-        <p>Loading post data...</p>
+        <p>{t('LoadingPostData')}</p>
       </>
     );
   }
 
   if (!loading && !post) {
-    return <p>There are no posts, be the first to post something!</p>;
+    return <p>{t('NoPostData')}</p>;
   }
 
   
