@@ -47,6 +47,7 @@ const ChatPage = () => {
     setCurrentMessage(e.target.value);
   };
 
+
   const sendMessage = async () => {
     const messageContent = {
       chatId: chatId,
@@ -64,6 +65,12 @@ const ChatPage = () => {
     setCurrentMessage('');
     scrollToBottom();
   };
+
+  function getGermanyTime(){
+    const now = new Date();
+    const germanyTime = now.toLocaleTimeString('de-DE', { timeZone: 'Europe/Berlin' });
+    return germanyTime;
+  }
 
   if (loading) {
     return (
@@ -84,7 +91,7 @@ const ChatPage = () => {
               key={index}
               className={`message ${val.sender.username === user.username ? 'sent' : 'received'}`}
             >
-              <div className="message-content">{val.message}</div>
+              <div className="message-content">{getGermanyTime()} - {val.sender.username}: {val.message}</div>
             </div>
           ))}
           <div ref={messagesEndRef} />
